@@ -65,7 +65,7 @@ public interface SoccerTeamInterface {
    * This method converts the list of all the players on the team into a string, listing the jersey
    * number, last name, and first name.
    */
-  String allPlayerListToString();
+  String allTeamPlayerListToString();
 
   /**
    * This method converts the list of all the players on the starting lineup into a string, listing

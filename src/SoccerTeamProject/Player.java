@@ -2,6 +2,7 @@ package SoccerTeamProject;
 
 import java.time.LocalDate;
 import java.time.Period;
+import java.util.Objects;
 
 /**
  * This class represents a soccer player on a soccer team. Each player has a first name, last name,
@@ -105,5 +106,26 @@ public class Player {
   public String toString() {
     return getLastName() + ", " + getFirstName() + "; AGE: " + this.getAge() + "; SKILL: "
         + this.skillLevel;
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(this.firstName, this.lastName, this.birthdate, this.preferredPosition,
+        this.skillLevel);
+  }
+
+  @Override
+  public boolean equals(Object other) {
+    if (this == other) {
+      return true;
+    }
+    if (!(other instanceof Player)) {
+      return false;
+    }
+    Player otherPlayer = (Player) other;
+    return this.firstName.equals(otherPlayer.firstName) && this.lastName.equals(
+        otherPlayer.lastName) && this.birthdate.equals(otherPlayer.birthdate)
+        && this.preferredPosition == otherPlayer.preferredPosition
+        && this.skillLevel == otherPlayer.skillLevel;
   }
 }

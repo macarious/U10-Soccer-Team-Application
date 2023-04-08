@@ -19,7 +19,7 @@ public class PlayerIdentifier implements Comparable<PlayerIdentifier> {
    * @param jerseyNumber int, assigned jersey number.
    * @throws IllegalArgumentException if jersey number is negative.
    */
-  public PlayerIdentifier(int jerseyNumber) throws IllegalArgumentException{
+  public PlayerIdentifier(int jerseyNumber) throws IllegalArgumentException {
     if (jerseyNumber < 0) {
       throw new IllegalArgumentException("Jersey number must be non-negative.");
     }
@@ -64,6 +64,31 @@ public class PlayerIdentifier implements Comparable<PlayerIdentifier> {
       str.append(this.assignedPosition);
     }
     return str.toString();
+  }
+
+  @Override
+  public int hashCode() {
+    if (this.assignedPosition == null) {
+      return Objects.hash(this.jerseyNumber);
+    } else {
+      return Objects.hash(this.jerseyNumber, this.assignedPosition);
+    }
+  }
+
+  @Override
+  public boolean equals(Object other) {
+    if (this == other) {
+      return true;
+    }
+    if (!(other instanceof PlayerIdentifier)) {
+      return false;
+    }
+    PlayerIdentifier otherPlayerIdentifier = (PlayerIdentifier) other;
+    if (this.assignedPosition == null) {
+      return this.jerseyNumber == otherPlayerIdentifier.getJerseyNumber();
+    }
+    return this.jerseyNumber == otherPlayerIdentifier.getJerseyNumber()
+        && this.assignedPosition == otherPlayerIdentifier.getAssignedPosition();
   }
 
   @Override

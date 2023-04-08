@@ -1,6 +1,9 @@
 package SoccerTeamProject;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotEquals;
+import static org.junit.Assert.assertTrue;
 
 import java.time.LocalDate;
 import org.junit.Before;
@@ -130,5 +133,57 @@ public class PlayerTest {
     assertEquals("De Bruyne, Kevin; AGE: 1; SKILL: 4", player2.toString());
     assertEquals("Neuer, Manuel; AGE: 5; SKILL: 2", player3.toString());
     assertEquals("Ramos, Sergio; AGE: 5; SKILL: 3", player4.toString());
+  }
+
+  /**
+   * This test tests the equals method when the hashcode of two objects are equal.
+   */
+  @Test
+  public void testHashCodeEqual() {
+    Player playerDuplicate = new Player("Lionel", "Messi", LocalDate.of(2018, 6, 24),
+        Position.FORWARD, 5);
+    assertEquals(player1.hashCode(), player1.hashCode());
+    assertEquals(player1.hashCode(), playerDuplicate.hashCode());
+    assertEquals(playerDuplicate.hashCode(), player1.hashCode());
+  }
+
+  /**
+   * This test tests the equals method when the hashcodes of two objects are not equal.
+   */
+  @Test
+  public void testHashCodeNotEqual() {
+    assertNotEquals(player1.hashCode(), player2.hashCode());
+    assertNotEquals(player2.hashCode(), player3.hashCode());
+    assertNotEquals(player3.hashCode(), player2.hashCode());
+  }
+
+  /**
+   * This test tests the equals method when the two objects are equal.
+   */
+  @Test
+  public void testEqualsTrue() {
+    Player playerDuplicate = new Player("Lionel", "Messi", LocalDate.of(2018, 6, 24),
+        Position.FORWARD, 5);
+    assertEquals(player1, player1);
+    assertEquals(player1, playerDuplicate);
+    assertEquals(playerDuplicate, player1);
+  }
+
+  /**
+   * This test tests the equals method when the two objects are not equal.
+   */
+  @Test
+  public void testEqualsFalse() {
+    assertNotEquals(player1, player2);
+    assertNotEquals(player2, player3);
+    assertNotEquals(player3, player2);
+  }
+
+  /**
+   * This test tests the equals method when an object is compared to null.
+   */
+  @Test
+  public void testEqualsNull() {
+    assertNotEquals(player1, null);
   }
 }

@@ -1,8 +1,11 @@
 package SoccerTeamProject;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertTrue;
 
+import java.time.LocalDate;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -76,6 +79,77 @@ public class PlayerIdentifierTest {
     assertEquals("00 MIDFIELDER", player3.toString());
     // When no positions are assigned.
     assertEquals("15 BENCHED", player4.toString());
+  }
+
+  /**
+   * This test tests the equals method when the hashcode of two objects are equal.
+   */
+  @Test
+  public void testHashCodeEqual() {
+    player1.setAssignedPosition(Position.DEFENDER);
+
+    PlayerIdentifier playerDuplicate = new PlayerIdentifier(10);
+    playerDuplicate.setAssignedPosition(Position.DEFENDER);
+
+
+    assertEquals(player1.hashCode(), player1.hashCode());
+    assertEquals(player1.hashCode(), playerDuplicate.hashCode());
+    assertEquals(playerDuplicate.hashCode(), player1.hashCode());
+  }
+
+  /**
+   * This test tests the equals method when the hashcode of two objects are not equal.
+   */
+  @Test
+  public void testHashCodeNotEqual() {
+    player1.setAssignedPosition(Position.DEFENDER);
+    player1.setAssignedPosition(Position.DEFENDER);
+    player2.setAssignedPosition(Position.GOALIE);
+    player3.setAssignedPosition(Position.MIDFIELDER);
+
+    assertNotEquals(player1.hashCode(), player2.hashCode());
+    assertNotEquals(player2.hashCode(), player3.hashCode());
+    assertNotEquals(player3.hashCode(), player2.hashCode());
+  }
+
+  /**
+   * This test tests the equals method when the two objects are equal.
+   */
+  @Test
+  public void testEqualsTrue() {
+    player1.setAssignedPosition(Position.DEFENDER);
+
+    PlayerIdentifier playerDuplicate = new PlayerIdentifier(10);
+    playerDuplicate.setAssignedPosition(Position.DEFENDER);
+
+    assertEquals(player1, player1);
+    assertEquals(player1, playerDuplicate);
+    assertEquals(playerDuplicate, player1);
+  }
+
+  /**
+   * This test tests the equals method when the two objects are not equal.
+   */
+  @Test
+  public void testEqualsFalse() {
+    player1.setAssignedPosition(Position.DEFENDER);
+    player1.setAssignedPosition(Position.DEFENDER);
+    player2.setAssignedPosition(Position.GOALIE);
+    player3.setAssignedPosition(Position.MIDFIELDER);
+
+    assertNotEquals(player1, player2);
+    assertNotEquals(player2, player3);
+    assertNotEquals(player3, player2);
+  }
+
+  /**
+   * This test tests the equals method when an object is compared to null.
+   */
+  @Test
+  public void testEqualsNull() {
+    player1.setAssignedPosition(Position.DEFENDER);
+
+    assertNotEquals(player1, null);
   }
 
   /**

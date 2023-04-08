@@ -1,0 +1,63 @@
+All Registered Players:
+-----------------------
+Alcântara, Thiago; AGE: 4; SKILL: 5
+Hazard, Eden; AGE: 5; SKILL: 5
+Kane, Harry; AGE: 4; SKILL: 5
+Ramos, Sergio; AGE: 7; SKILL: 5
+Dybala, Paulo; AGE: 4; SKILL: 4
+Mane, Sadio; AGE: 4; SKILL: 4
+Modrić, Luka; AGE: 7; SKILL: 4
+Salah, Mohamed; AGE: 4; SKILL: 4
+De Bruyne, Kevin; AGE: 4; SKILL: 3
+Jr., Neymar; AGE: 5; SKILL: 3
+Lewandowski, Robert; AGE: 4; SKILL: 3
+Mbappé, Kylian; AGE: 4; SKILL: 3
+Messi, Lionel; AGE: 5; SKILL: 3
+Müller, Thomas; AGE: 4; SKILL: 3
+Sterling, Raheem; AGE: 4; SKILL: 3
+Bale, Gareth; AGE: 4; SKILL: 2
+Griezmann, Antoine; AGE: 5; SKILL: 2
+Neuer, Manuel; AGE: 7; SKILL: 2
+van Dijk, Virgil; AGE: 4; SKILL: 2
+Agüero, Sergio; AGE: 4; SKILL: 1
+Benzema, Karim; AGE: 5; SKILL: 1
+Oblak, Jan; AGE: 5; SKILL: 1
+Reus, Marco; AGE: 4; SKILL: 1
+Ronaldo, Cristiano; AGE: 8; SKILL: 1
+Suárez, Luis; AGE: 6; SKILL: 1
+
+All Players on Team:
+--------------------
+07 GOALIE -- Dybala, Paulo
+05 DEFENDER -- Mane, Sadio
+06 DEFENDER -- Ramos, Sergio
+15 MIDFIELDER -- Alcântara, Thiago
+18 MIDFIELDER -- Hazard, Eden
+17 MIDFIELDER -- Modrić, Luka
+20 FORWARD -- Kane, Harry
+09 BENCHED -- Agüero, Sergio
+14 BENCHED -- Bale, Gareth
+16 BENCHED -- De Bruyne, Kevin
+01 BENCHED -- Griezmann, Antoine
+13 BENCHED -- Jr., Neymar
+02 BENCHED -- Lewandowski, Robert
+08 BENCHED -- Mbappé, Kylian
+11 BENCHED -- Messi, Lionel
+10 BENCHED -- Müller, Thomas
+03 BENCHED -- Neuer, Manuel
+12 BENCHED -- Salah, Mohamed
+19 BENCHED -- Sterling, Raheem
+04 BENCHED -- van Dijk, Virgil
+
+Starting Line Up:
+-----------------
+07 GOALIE -- Dybala, Paulo
+05 DEFENDER -- Mane, Sadio
+06 DEFENDER -- Ramos, Sergio
+15 MIDFIELDER -- Alcântara, Thiago
+18 MIDFIELDER -- Hazard, Eden
+17 MIDFIELDER -- Modrić, Luka
+20 FORWARD -- Kane, Harry
+
+
+Process finished with exit code 0
