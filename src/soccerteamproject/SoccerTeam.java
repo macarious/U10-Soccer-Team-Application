@@ -1,4 +1,4 @@
-package SoccerTeamProject;
+package soccerteamproject;
 
 import java.time.LocalDate;
 import java.util.Comparator;
@@ -26,15 +26,21 @@ public class SoccerTeam implements SoccerTeamInterface {
   private static final int MIN_TEAM_PLAYERS_COUNT = 10;
   private static final int MAX_TEAM_PLAYERS_COUNT = 20;
   private static final int MAX_JERSEY_NUMBER = 20;
-  private final Map<Position, Integer> positionAssignmentCount; // Map of position and the remaining assignments.
-  private final Set<Player> allPlayerList; // All players input, sorted by skill level.
-  private final Map<PlayerIdentifier, Player> teamPlayerList; // Map of players and their identifiers.
-  private final Random randomGenerator; // Random generated used for all methods.
+  // Map of position and the remaining assignments.
+  private final Map<Position, Integer> positionAssignmentCount;
+  // All players input, sorted by skill level.
+  private final Set<Player> allPlayerList;
+  // Map of players and their identifiers.
+  private final Map<PlayerIdentifier, Player> teamPlayerList;
+  // Random generated used for all methods.
+  private final Random randomGenerator;
 
   /**
    * This is a constructor of a SoccerTeam. It creates an empty player list and an empty list of
    * players assigned to the team. The player list (Tree Set) is sorted by skill level because they
    * are the most valuable/prioritized players on the list.
+   *
+   * @param randomGenerator Random, random generator to be used for the team creation.
    */
   public SoccerTeam(Random randomGenerator) {
     this.allPlayerList = new TreeSet<>(Comparator
@@ -122,8 +128,8 @@ public class SoccerTeam implements SoccerTeamInterface {
    * This method sorts a list of {@link Player} by their assigned position. Last name and then first
    * name are used as tie-breakers.
    *
-   * @param map {@link Map}<int, {@link Player}>, a list of soccer players.
-   * @return {@link Map}<int, {@link Player}>, a list of sorted soccer players.
+   * @param map {@link Map} of {@link PlayerIdentifier}, {@link Player}, a list of soccer players.
+   * @return {@link Map} of {@link PlayerIdentifier}, {@link Player}, a list of sorted players.
    */
   private Map<PlayerIdentifier, Player> sortMap(Map<PlayerIdentifier, Player> map) {
     return map

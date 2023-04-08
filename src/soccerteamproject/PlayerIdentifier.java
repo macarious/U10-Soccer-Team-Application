@@ -1,4 +1,4 @@
-package SoccerTeamProject;
+package soccerteamproject;
 
 import java.util.Objects;
 

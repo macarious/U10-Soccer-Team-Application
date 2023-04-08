@@ -1,15 +1,15 @@
-package SoccerTeamProject;
+package soccerteamproject;
 
 import java.time.LocalDate;
 import java.util.Random;
 
 /**
- * This is the driver class. It is used to run the application.
+ * This is the Driver class. It is used to run the application.
  */
-public class driver {
+public class Driver {
 
   /**
-   * This is the main method which acts as the driver.
+   * This is the main method which acts as the Driver.
    *
    * @param args String[], arguments for main.
    */

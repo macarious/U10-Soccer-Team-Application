@@ -1,7 +1,6 @@
-package SoccerTeamProject;
+package soccerteamproject;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
 
 import java.time.LocalDate;
 import java.util.Comparator;
@@ -20,8 +19,8 @@ import org.junit.Test;
  */
 public class SoccerTeamTest {
 
-  private SoccerTeam soccerTeam;
   private static final int TEST_SEED = 19890604;
+  private SoccerTeam soccerTeam;
 
   /**
    * Sets up {@link SoccerTeam} used for various tests.
@@ -554,7 +553,8 @@ public class SoccerTeamTest {
   }
 
   // Custom method to compare HashMaps based on their content
-  private void assertHashMapEquals(Map<PlayerIdentifier, Player> expected, Map<PlayerIdentifier, Player> actual) {
+  private void assertHashMapEquals(Map<PlayerIdentifier, Player> expected,
+      Map<PlayerIdentifier, Player> actual) {
     assertEquals(expected.keySet(), actual.keySet());
     for (PlayerIdentifier key : expected.keySet()) {
       assertEquals(expected.get(key), actual.get(key));

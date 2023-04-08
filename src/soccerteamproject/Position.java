@@ -1,4 +1,4 @@
-package SoccerTeamProject;
+package soccerteamproject;
 
 /**
  * This Enum represents a position of a soccer player. The four options are goalie, defender,

@@ -1,4 +1,4 @@
-package SoccerTeamProject;
+package soccerteamproject;
 
 import java.time.LocalDate;
 import java.util.Map;
@@ -11,8 +11,8 @@ import java.util.Set;
  */
 public interface SoccerTeamInterface {
   /**
-   * This method adds a {@link Player} object to the list of soccer players, given the
-   * player's information.
+   * This method adds a {@link Player} object to the list of soccer players, given the player's
+   * information.
    *
    * @param firstName         String, first name of player.
    * @param lastName          String, last name of player.
@@ -46,8 +46,7 @@ public interface SoccerTeamInterface {
    * the unique player identifier (consisting of a jersey number and a position) and the value is
    * the {@link Player}.
    *
-   * @return {@link Map}<{@link PlayerIdentifier}, {@link Player}> list of soccer players on
-   * the starting line up.
+   * @return {@link Map} of {@link PlayerIdentifier}, {@link Player}, list of starting line up.
    */
   Map<PlayerIdentifier, Player> getStartingLineUp();
 
@@ -56,20 +55,23 @@ public interface SoccerTeamInterface {
    * unique player identifier (consisting of a jersey number and a position) and the value is the
    * {@link Player}.
    *
-   * @return {@link Map}<{@link PlayerIdentifier}, {@link Player}> list of soccer players on
-   * the team.
+   * @return {@link Map} of {@link PlayerIdentifier}, {@link Player}, soccer players on team.
    */
   Map<PlayerIdentifier, Player> getTeamPlayerList();
 
   /**
    * This method converts the list of all the players on the team into a string, listing the jersey
    * number, last name, and first name.
+   *
+   * @return String, list of team player represented as string.
    */
   String allTeamPlayerListToString();
 
   /**
    * This method converts the list of all the players on the starting lineup into a string, listing
    * the jersey number, assigned position, last name, and first name.
+   *
+   * @return String, list of starting line up represented as string.
    */
   String startingLineUpToString();
 }

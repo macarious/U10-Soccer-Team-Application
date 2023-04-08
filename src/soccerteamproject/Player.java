@@ -1,4 +1,4 @@
-package SoccerTeamProject;
+package soccerteamproject;
 
 import java.time.LocalDate;
 import java.time.Period;
@@ -22,11 +22,11 @@ public class Player {
   /**
    * This is a constructor of a Player class.
    *
-   * @param firstName          String, first name of player.
-   * @param lastName           String, last name of player.
-   * @param birthdate          LocalDate, birthdate of player.
-   * @param preferredPosition, Position, preferred position of player.
-   * @param skillLevel         int, skill level of player (1 to 5).
+   * @param firstName         String, first name of player.
+   * @param lastName          String, last name of player.
+   * @param birthdate         LocalDate, birthdate of player.
+   * @param preferredPosition Position, preferred position of player.
+   * @param skillLevel        int, skill level of player (1 to 5).
    * @throws IllegalArgumentException if player's age is less than 0 or greater than 10.
    * @throws IllegalArgumentException if skill leve is not between 1 and 5 (inclusive).
    */
