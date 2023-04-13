@@ -1,9 +1,8 @@
 package soccerteamproject;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Comparator;
-import java.util.HashSet;
-import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -76,10 +75,12 @@ public class SoccerTeam implements SoccerTeamInterface {
 
   @Override
   public Set<Player> getAllPlayerList() {
-    TreeSet<Player> sortedSet = new TreeSet<>(
-        Comparator.comparing(Player::getLastName).thenComparing(Player::getFirstName));
-    sortedSet.addAll(this.allPlayerList);
-    return sortedSet;
+    return this.sortSetByPlayer(this.allPlayerList);
+  }
+
+  @Override
+  public Map<PlayerIdentifier, Player> getTeamPlayerList() {
+    return sortMapByPlayer(this.teamPlayerList);
   }
 
   @Override
@@ -91,17 +92,12 @@ public class SoccerTeam implements SoccerTeamInterface {
         .collect(
             Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue, (value1, value2) -> value2,
                 LinkedHashMap::new));
-    return sortMap(startingLineUp);
-  }
-
-  @Override
-  public Map<PlayerIdentifier, Player> getTeamPlayerList() {
-    return sortMap(this.teamPlayerList);
+    return sortMapByPosition(startingLineUp);
   }
 
   @Override
   public String toString() {
-    return this.allPlayerList.stream().map(Player::toString).collect(Collectors.joining("\n"));
+    return this.getAllPlayerList().stream().map(Player::toString).collect(Collectors.joining("\n"));
   }
 
   @Override
@@ -125,142 +121,169 @@ public class SoccerTeam implements SoccerTeamInterface {
   }
 
   /**
-   * This method sorts a list of {@link Player} by their assigned position. Last name and then first
-   * name are used as tie-breakers.
+   * This method creates a new {@link TreeSet} which is sorted by last name, then first name.
+   *
+   * @param set Set<{@link Player}>, a set of players.
+   * @return {@link TreeSet}, a set of {@link Player} ordered by last name, then first name.
+   */
+  private Set<Player> sortSetByPlayer(Set<Player> set) {
+    TreeSet<Player> sortedSet = new TreeSet<>(set);
+    return sortedSet;
+  }
+
+  /**
+   * This method sorts a list of {@link Player} by the natural ordering of {@link Player} which
+   * compares last name. First name and then birthdate, are used as tie-breakers.
    *
    * @param map {@link Map} of {@link PlayerIdentifier}, {@link Player}, a list of soccer players.
    * @return {@link Map} of {@link PlayerIdentifier}, {@link Player}, a list of sorted players.
    */
-  private Map<PlayerIdentifier, Player> sortMap(Map<PlayerIdentifier, Player> map) {
+  private Map<PlayerIdentifier, Player> sortMapByPlayer(Map<PlayerIdentifier, Player> map) {
     return map
         .entrySet()
         .stream()
-        .sorted(Entry
-            .<PlayerIdentifier, Player>comparingByKey()
-            .thenComparing(entry -> entry.getValue().getLastName())
-            .thenComparing(entry -> entry.getValue().getFirstName()))
+        .sorted(Entry.comparingByValue())
         .collect(
             Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue, (value1, value2) -> value2,
                 LinkedHashMap::new));
   }
 
-  /**
-   * This method assigns randomly generated numbers from 1 to 20 to each of the first 20 players
-   * (already sorted by skill level) and form a team.
-   */
-  private void assignJerseyNumberToTeam() {
-    // Create a hash set containing all the available jersey numbers.
-    Set<Integer> availableNumbers = new HashSet<>();
-    for (int i = 1; i <= MAX_JERSEY_NUMBER; i++) {
-      availableNumbers.add(i);
+    /**
+     * This method sorts a list of {@link Player} by their assigned position. Last name and then first
+     * name are used as tie-breakers.
+     *
+     * @param map {@link Map} of {@link PlayerIdentifier}, {@link Player}, a list of soccer players.
+     * @return {@link Map} of {@link PlayerIdentifier}, {@link Player}, a list of sorted players.
+     */
+    private Map<PlayerIdentifier, Player> sortMapByPosition (Map <PlayerIdentifier, Player> map) {
+      return map
+          .entrySet()
+          .stream()
+          .sorted(Entry
+              .<PlayerIdentifier, Player>comparingByKey()
+              .thenComparing(entry -> entry.getValue().getLastName())
+              .thenComparing(entry -> entry.getValue().getFirstName()))
+          .collect(
+              Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue, (value1, value2) -> value2,
+                  LinkedHashMap::new));
     }
 
-    for (Player player : allPlayerList) {
+    /**
+     * This method assigns randomly generated numbers from 1 to 20 to each of the first 20 players
+     * (already sorted by skill level) and form a team.
+     */
+    private void assignJerseyNumberToTeam () {
+      // Create an array containing all the available jersey numbers.
+      ArrayList<Integer> availableNumbers = new ArrayList<>();
+      for (int i = 1; i <= MAX_JERSEY_NUMBER; i++) {
+        availableNumbers.add(i);
+      }
 
-      // Only assign player to team if there are still available jersey numbers to choose from.
-      if (!availableNumbers.isEmpty()) {
+      int jerseyAssignmentCount = 0;
 
-        // Choose a random integer from available numbers.
-        Iterator<Integer> iterator = availableNumbers.iterator();
-        int randomIndex = randomGenerator.nextInt(availableNumbers.size());
-        int jerseyNumber = 0;
-        for (int i = 0; i <= randomIndex; i++) {
-          jerseyNumber = iterator.next();
+      for (Player player : allPlayerList) {
+
+        // Only assign player to team if there are still available jersey numbers to choose from.
+        if (jerseyAssignmentCount > MAX_TEAM_PLAYERS_COUNT || !availableNumbers.isEmpty()) {
+
+          // Choose a random integer from available numbers.
+          int randomIndex = randomGenerator.nextInt(availableNumbers.size());
+          int jerseyNumber = availableNumbers.get(randomIndex);
+          availableNumbers.remove(randomIndex);
+          jerseyAssignmentCount++;
+
+          // Add player to the teamPlayerList with the chosen jersey number.
+          this.teamPlayerList.put(new PlayerIdentifier(jerseyNumber), player);
         }
-        iterator.remove();
-
-        // Add player to the teamPlayerList with the chosen jersey number.
-        this.teamPlayerList.put(new PlayerIdentifier(jerseyNumber), player);
       }
     }
-  }
 
-  /**
-   * This method assign positions to the players who have already assigned a jersey number (which
-   * means they are on the team). The positions are first assigned to the highest skilled players.
-   * If the player's preferred position is still available, it will be assigned to the player;
-   * another position will be assigned otherwise.
-   */
-  private void assignPositions() {
-    int skillLevel = 5; // Start assigning positions at skill level 5, then move to 4, 3, etc.
-    while (skillLevel > 0) {
-      // Assign positions to players who have a matching preferred position.
-      for (Position position : Position.values()) {
-        int remaining = this.positionAssignmentCount.get(position);
-        this.assignPositionPreferred(position, remaining, skillLevel);
-      }
+    /**
+     * This method assign positions to the players who have already assigned a jersey number (which
+     * means they are on the team). The positions are first assigned to the highest skilled players.
+     * If the player's preferred position is still available, it will be assigned to the player;
+     * another position will be assigned otherwise.
+     */
+    private void assignPositions () {
+      int skillLevel = 5; // Start assigning positions at skill level 5, then move to 4, 3, etc.
+      while (skillLevel > 0) {
+        // Assign positions to players who have a matching preferred position.
+        for (Position position : Position.values()) {
+          int remaining = this.positionAssignmentCount.get(position);
+          this.assignPositionPreferred(position, remaining, skillLevel);
+        }
 
-      // Assign positions to players to remaining players with the same skill levels.
-      for (Position position : Position.values()) {
-        int remaining = this.positionAssignmentCount.get(position);
-        this.assignPositionRemained(position, remaining, skillLevel);
+        // Assign positions to players to remaining players with the same skill levels.
+        for (Position position : Position.values()) {
+          int remaining = this.positionAssignmentCount.get(position);
+          this.assignPositionRemained(position, remaining, skillLevel);
+        }
+        skillLevel--;
       }
-      skillLevel--;
     }
-  }
 
-  /**
-   * This method assigns a position a specified number of times to players who have a matching
-   * preferred position, and returns the number of positions which are successfully assigned. The
-   * team list should already be sorted by skill level.
-   *
-   * @param position {@link Position}, position to be assigned.
-   * @param quantity int, the maximum number of players to be assigned.
-   */
-  private void assignPositionPreferred(Position position, int quantity, int skillLevel) {
-    // Repeat assignment until desired number of players have been assigned, or when there are no
-    // more players with the preferred positions to assign to.
-    for (int i = 0; i < quantity; i++) {
-      this.teamPlayerList
+    /**
+     * This method assigns a position a specified number of times to players who have a matching
+     * preferred position, and returns the number of positions which are successfully assigned. The
+     * team list should naturally be sorted by skill level in this class.
+     *
+     * @param position {@link Position}, position to be assigned.
+     * @param quantity int, the maximum number of players to be assigned.
+     */
+    private void assignPositionPreferred (Position position,int quantity, int skillLevel){
+      // Repeat assignment until desired number of players have been assigned, or when there are no
+      // more players with the preferred positions to assign to.
+      for (int i = 0; i < quantity; i++) {
+        this.teamPlayerList
+            .entrySet()
+            .stream()
+            .filter(entry -> entry.getKey().getAssignedPosition() == null)
+            .filter(entry -> entry.getValue().getSkillLevel() == skillLevel)
+            .filter(entry -> entry.getValue().getPreferredPosition() == position)
+            .findAny()
+            .ifPresent(entry -> {
+              entry.getKey().setAssignedPosition(position);
+              int positionCount = this.positionAssignmentCount.get(position);
+              this.positionAssignmentCount.put(position, positionCount - 1);
+            });
+      }
+    }
+
+    /**
+     * This method assigns a position a specified number of times to all remaining players and returns
+     * the number of positions which are successfully assigned.
+     *
+     * @param position {@link Position}, position to be assigned.
+     * @param quantity int, the number of players to be assigned.
+     */
+    private void assignPositionRemained (Position position,int quantity, int skillLevel){
+      for (int i = 0; i < quantity; i++) {
+        this.teamPlayerList
+            .entrySet()
+            .stream()
+            .filter(entry -> entry.getKey().getAssignedPosition() == null)
+            .filter(entry -> entry.getValue().getSkillLevel() == skillLevel)
+            .findAny()
+            .ifPresent(entry -> {
+              entry.getKey().setAssignedPosition(position);
+              int positionCount = this.positionAssignmentCount.get(position);
+              this.positionAssignmentCount.put(position, positionCount - 1);
+            });
+      }
+    }
+
+    /**
+     * This method converts a map of <{@link PlayerIdentifier}, {@link Player}> and convert it into a
+     * String.
+     *
+     * @param map Map<{@link PlayerIdentifier}, {@link Player}>, a map to be converted.
+     * @return String, lists out the keys and values.
+     */
+    private String convertMapToString (Map < PlayerIdentifier, Player > map){
+      return map
           .entrySet()
           .stream()
-          .filter(entry -> entry.getKey().getAssignedPosition() == null)
-          .filter(entry -> entry.getValue().getSkillLevel() == skillLevel)
-          .filter(entry -> entry.getValue().getPreferredPosition() == position)
-          .findAny()
-          .ifPresent(entry -> {
-            entry.getKey().setAssignedPosition(position);
-            int positionCount = this.positionAssignmentCount.get(position);
-            this.positionAssignmentCount.put(position, positionCount - 1);
-          });
+          .map(entry -> entry.getKey() + " -- " + entry.getValue().nameToString())
+          .collect(Collectors.joining("\n"));
     }
   }
-
-  /**
-   * This method assigns a position a specified number of times to all remaining players and returns
-   * the number of positions which are successfully assigned.
-   *
-   * @param position {@link Position}, position to be assigned.
-   * @param quantity int, the number of players to be assigned.
-   */
-  private void assignPositionRemained(Position position, int quantity, int skillLevel) {
-    for (int i = 0; i < quantity; i++) {
-      this.teamPlayerList
-          .entrySet()
-          .stream()
-          .filter(entry -> entry.getKey().getAssignedPosition() == null)
-          .filter(entry -> entry.getValue().getSkillLevel() == skillLevel)
-          .findAny()
-          .ifPresent(entry -> {
-            entry.getKey().setAssignedPosition(position);
-            int positionCount = this.positionAssignmentCount.get(position);
-            this.positionAssignmentCount.put(position, positionCount - 1);
-          });
-    }
-  }
-
-  /**
-   * This method converts a map of <{@link PlayerIdentifier}, {@link Player}> and convert it into a
-   * String.
-   *
-   * @param map Map<{@link PlayerIdentifier}, {@link Player}>, a map to be converted.
-   * @return String, lists out the keys and values.
-   */
-  private String convertMapToString(Map<PlayerIdentifier, Player> map) {
-    return map
-        .entrySet()
-        .stream()
-        .map(entry -> entry.getKey() + " -- " + entry.getValue().nameToString())
-        .collect(Collectors.joining("\n"));
-  }
-}

@@ -1,7 +1,6 @@
 package soccerteamproject;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertTrue;
 
@@ -185,5 +184,22 @@ public class PlayerTest {
   @Test
   public void testEqualsNull() {
     assertNotEquals(player1, null);
+  }
+
+  /**
+   * This test tests the compareTo method which compares by last name, first name, then birthdate.
+   */
+  @Test
+  public void testCompareTo() {
+    // Different first names.
+    assertTrue(player1.compareTo(player2) > 0);
+
+    // Same first name, different last names.
+    Player playerSameLastName = new Player("Lionel", "Nessi", LocalDate.of(2018, 6, 24), Position.FORWARD, 5);
+    assertTrue(player1.compareTo(playerSameLastName) < 0);
+
+    // Same first names and last names, different age.
+    Player playerSameNames = new Player("Lionel", "Messi", LocalDate.of(2018, 6, 22), Position.FORWARD, 5);
+    assertTrue(player1.compareTo(playerSameNames) > 0);
   }
 }

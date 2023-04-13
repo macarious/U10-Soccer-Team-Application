@@ -70,5 +70,9 @@ public class Driver {
     System.out.print("-----------------\n");
     System.out.print(soccerTeam.startingLineUpToString());
     System.out.print("\n\n");
+
+    // Application with gui.
+    ApplicationInterface gui = new Application();
+    ControllerInterface controller = new Controller(soccerTeam, gui);
   }
 }

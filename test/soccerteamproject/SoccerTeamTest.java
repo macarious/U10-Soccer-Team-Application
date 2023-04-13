@@ -146,7 +146,7 @@ public class SoccerTeamTest {
         .getTeamPlayerList()
         .keySet()
         .stream()
-        .map(entry -> entry.getJerseyNumber())
+        .map(PlayerIdentifier::getJerseyNumber)
         .collect(Collectors.toCollection(HashSet::new))
         .size();
     assertEquals(playerCount, uniqueJerseyCount);
@@ -235,7 +235,7 @@ public class SoccerTeamTest {
 
   /**
    * This test tests the createTeam method when there are 25 players registered (5 more than
-   * maximum). Only top 20 players with highest skill levels are assigned to the team.
+   * maximum). Only top 20 players with the highest skill levels are assigned to the team.
    */
   @Test
   public void testCreateTeamExceedMaxPlayers() {
@@ -549,16 +549,63 @@ public class SoccerTeamTest {
     player = new Player("Mohamed", "Salah", LocalDate.of(2018, 6, 15), Position.FORWARD, 2);
     expectedMap.put(playerIdentifier, player);
 
-    assertHashMapEquals(expectedMap, soccerTeam.getTeamPlayerList());
+    assertEquals(expectedMap, soccerTeam.getTeamPlayerList());
   }
 
-  // Custom method to compare HashMaps based on their content
-  private void assertHashMapEquals(Map<PlayerIdentifier, Player> expected,
-      Map<PlayerIdentifier, Player> actual) {
-    assertEquals(expected.keySet(), actual.keySet());
-    for (PlayerIdentifier key : expected.keySet()) {
-      assertEquals(expected.get(key), actual.get(key));
-    }
+  /**
+   * This test tests the toString method.
+   */
+  @Test
+  public void testToString() {
+    soccerTeam.registerPlayer("Lionel", "Messi", LocalDate.of(2017, 6, 24), Position.FORWARD, 2);
+    soccerTeam.registerPlayer("Cristiano", "Ronaldo", LocalDate.of(2015, 2, 5), Position.FORWARD,
+        4);
+    soccerTeam.registerPlayer("Neymar", "Jr.", LocalDate.of(2018, 2, 5), Position.FORWARD, 1);
+    soccerTeam.registerPlayer("Kylian", "Mbappé", LocalDate.of(2018, 12, 20), Position.FORWARD, 2);
+    soccerTeam.registerPlayer("Mohamed", "Salah", LocalDate.of(2018, 6, 15), Position.FORWARD, 2);
+    soccerTeam.registerPlayer("Sergio", "Agüero", LocalDate.of(2018, 6, 2), Position.FORWARD, 2);
+    soccerTeam.registerPlayer("Harry", "Kane", LocalDate.of(2018, 7, 28), Position.FORWARD, 2);
+    soccerTeam.registerPlayer("Robert", "Lewandowski", LocalDate.of(2018, 8, 21), Position.FORWARD,
+        5);
+    soccerTeam.registerPlayer("Kevin", "De Bruyne", LocalDate.of(2018, 6, 28), Position.MIDFIELDER,
+        3);
+    soccerTeam.registerPlayer("Luis", "Suárez", LocalDate.of(2017, 1, 24), Position.FORWARD, 5);
+    soccerTeam.registerPlayer("Manuel", "Neuer", LocalDate.of(2016, 3, 27), Position.GOALIE, 4);
+    soccerTeam.registerPlayer("Luka", "Modrić", LocalDate.of(2015, 9, 9), Position.MIDFIELDER, 3);
+    soccerTeam.registerPlayer("Antoine", "Griezmann", LocalDate.of(2018, 3, 21),
+        Position.MIDFIELDER, 3);
+    soccerTeam.registerPlayer("Eden", "Hazard", LocalDate.of(2018, 1, 7), Position.MIDFIELDER, 5);
+    soccerTeam.registerPlayer("Raheem", "Sterling", LocalDate.of(2018, 12, 8), Position.FORWARD, 5);
+    soccerTeam.registerPlayer("Virgil", "van Dijk", LocalDate.of(2018, 7, 8), Position.DEFENDER, 4);
+    soccerTeam.registerPlayer("Paulo", "Dybala", LocalDate.of(2018, 11, 15), Position.FORWARD, 3);
+    soccerTeam.registerPlayer("Gareth", "Bale", LocalDate.of(2018, 7, 16), Position.MIDFIELDER, 4);
+    soccerTeam.registerPlayer("Sergio", "Ramos", LocalDate.of(2016, 3, 30), Position.DEFENDER, 1);
+    soccerTeam.registerPlayer("Thiago", "Alcântara", LocalDate.of(2018, 4, 11), Position.MIDFIELDER,
+        2);
+
+    StringBuilder expected = new StringBuilder();
+    expected.append("Agüero, Sergio; AGE: 4; SKILL: 2\n");
+    expected.append("Alcântara, Thiago; AGE: 5; SKILL: 2\n");
+    expected.append("Bale, Gareth; AGE: 4; SKILL: 4\n");
+    expected.append("De Bruyne, Kevin; AGE: 4; SKILL: 3\n");
+    expected.append("Dybala, Paulo; AGE: 4; SKILL: 3\n");
+    expected.append("Griezmann, Antoine; AGE: 5; SKILL: 3\n");
+    expected.append("Hazard, Eden; AGE: 5; SKILL: 5\n");
+    expected.append("Jr., Neymar; AGE: 5; SKILL: 1\n");
+    expected.append("Kane, Harry; AGE: 4; SKILL: 2\n");
+    expected.append("Lewandowski, Robert; AGE: 4; SKILL: 5\n");
+    expected.append("Mbappé, Kylian; AGE: 4; SKILL: 2\n");
+    expected.append("Messi, Lionel; AGE: 5; SKILL: 2\n");
+    expected.append("Modrić, Luka; AGE: 7; SKILL: 3\n");
+    expected.append("Neuer, Manuel; AGE: 7; SKILL: 4\n");
+    expected.append("Ramos, Sergio; AGE: 7; SKILL: 1\n");
+    expected.append("Ronaldo, Cristiano; AGE: 8; SKILL: 4\n");
+    expected.append("Salah, Mohamed; AGE: 4; SKILL: 2\n");
+    expected.append("Sterling, Raheem; AGE: 4; SKILL: 5\n");
+    expected.append("Suárez, Luis; AGE: 6; SKILL: 5\n");
+    expected.append("van Dijk, Virgil; AGE: 4; SKILL: 4");
+
+    assertEquals(expected.toString(), soccerTeam.toString());
   }
 
   /**
@@ -596,26 +643,26 @@ public class SoccerTeamTest {
     soccerTeam.createTeam();
 
     StringBuilder expected = new StringBuilder();
-    expected.append("16 GOALIE -- Sterling, Raheem\n");
-    expected.append("02 DEFENDER -- Suárez, Luis\n");
-    expected.append("10 DEFENDER -- van Dijk, Virgil\n");
-    expected.append("14 MIDFIELDER -- Bale, Gareth\n");
-    expected.append("12 MIDFIELDER -- Hazard, Eden\n");
-    expected.append("15 MIDFIELDER -- Neuer, Manuel\n");
-    expected.append("19 FORWARD -- Lewandowski, Robert\n");
     expected.append("08 BENCHED -- Agüero, Sergio\n");
     expected.append("04 BENCHED -- Alcântara, Thiago\n");
+    expected.append("14 MIDFIELDER -- Bale, Gareth\n");
     expected.append("17 BENCHED -- De Bruyne, Kevin\n");
     expected.append("09 BENCHED -- Dybala, Paulo\n");
     expected.append("06 BENCHED -- Griezmann, Antoine\n");
+    expected.append("12 MIDFIELDER -- Hazard, Eden\n");
     expected.append("11 BENCHED -- Jr., Neymar\n");
     expected.append("05 BENCHED -- Kane, Harry\n");
+    expected.append("19 FORWARD -- Lewandowski, Robert\n");
     expected.append("01 BENCHED -- Mbappé, Kylian\n");
     expected.append("13 BENCHED -- Messi, Lionel\n");
     expected.append("07 BENCHED -- Modrić, Luka\n");
+    expected.append("15 MIDFIELDER -- Neuer, Manuel\n");
     expected.append("18 BENCHED -- Ramos, Sergio\n");
     expected.append("03 BENCHED -- Ronaldo, Cristiano\n");
-    expected.append("20 BENCHED -- Salah, Mohamed");
+    expected.append("20 BENCHED -- Salah, Mohamed\n");
+    expected.append("16 GOALIE -- Sterling, Raheem\n");
+    expected.append("02 DEFENDER -- Suárez, Luis\n");
+    expected.append("10 DEFENDER -- van Dijk, Virgil");
 
     assertEquals(expected.toString(), soccerTeam.allTeamPlayerListToString());
   }

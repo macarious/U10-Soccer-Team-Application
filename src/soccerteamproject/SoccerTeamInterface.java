@@ -42,15 +42,6 @@ public interface SoccerTeamInterface {
   Set<Player> getAllPlayerList();
 
   /**
-   * This method retrieves a map of all the soccer players on the starting line up. The key value is
-   * the unique player identifier (consisting of a jersey number and a position) and the value is
-   * the {@link Player}.
-   *
-   * @return {@link Map} of {@link PlayerIdentifier}, {@link Player}, list of starting line up.
-   */
-  Map<PlayerIdentifier, Player> getStartingLineUp();
-
-  /**
    * This method retrieves a map of all (20) team players on the soccer team. The key value is the
    * unique player identifier (consisting of a jersey number and a position) and the value is the
    * {@link Player}.
@@ -58,6 +49,15 @@ public interface SoccerTeamInterface {
    * @return {@link Map} of {@link PlayerIdentifier}, {@link Player}, soccer players on team.
    */
   Map<PlayerIdentifier, Player> getTeamPlayerList();
+
+  /**
+   * This method retrieves a map of all the soccer players on the starting line up. The key value is
+   * the unique player identifier (consisting of a jersey number and a position) and the value is
+   * the {@link Player}.
+   *
+   * @return {@link Map} of {@link PlayerIdentifier}, {@link Player}, list of starting line up.
+   */
+  Map<PlayerIdentifier, Player> getStartingLineUp();
 
   /**
    * This method converts the list of all the players on the team into a string, listing the jersey

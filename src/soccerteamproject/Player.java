@@ -10,7 +10,7 @@ import java.util.Objects;
  * {@link Position} if the player is on the starting line up, jersey number, and an indicator to
  * show if the player is benched or on the starting line up.
  */
-public class Player {
+public class Player implements Comparable<Player> {
 
   private static final int MAX_AGE = 10;
   private final String firstName;
@@ -127,5 +127,21 @@ public class Player {
         otherPlayer.lastName) && this.birthdate.equals(otherPlayer.birthdate)
         && this.preferredPosition == otherPlayer.preferredPosition
         && this.skillLevel == otherPlayer.skillLevel;
+  }
+
+  @Override
+  public int compareTo(Player other) {
+    // Compare Player by Last name, first name, then birthdate.
+    int result = this.lastName.compareTo(other.lastName);
+
+    if (result == 0) {
+      result = this.firstName.compareTo(other.firstName);
+    }
+
+    if (result == 0) {
+      result = this.birthdate.compareTo(other.birthdate);
+    }
+
+    return result;
   }
 }
