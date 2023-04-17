@@ -1,11 +1,15 @@
 package soccerteamproject;
 
-import java.awt.BorderLayout;
+import java.time.LocalDate;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.time.chrono.ChronoLocalDate;
+import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.JSpinner;
+import javax.swing.JTextField;
 import javax.swing.border.LineBorder;
 
 /**
@@ -20,13 +24,22 @@ public class Application extends JFrame implements ApplicationInterface {
   private final JPanel panel2; // Display all registered players.
   private final JPanel panel3; // Display the list of team players after team has been created.
   private final JPanel panel4; // Display the starting line up after team has been created.
-  private final Color colourBG;
+  private final JTextField textFieldFirstName;
+  private final JTextField textFieldLastName;
+  private final JSpinner spinnerBirthDate;
+  private final JSpinner spinnerSKillLeve;
+  private final JButton buttonAddPlayer;
+  private final JButton buttonCreateTeam;
+
+  private final Color colourBG1;
+  private final Color colourBG2;
   private final Color colourBorder;
 
   public Application() {
 
-    // Default colours.
-    colourBG = Color.DARK_GRAY;
+    // Default colours (Dark Mode).
+    colourBG1 = Color.BLACK;
+    colourBG2 = Color.DARK_GRAY;
     colourBorder = Color.LIGHT_GRAY;
 
     // Set up main application frame.
@@ -34,9 +47,9 @@ public class Application extends JFrame implements ApplicationInterface {
     setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     setLayout(new FlowLayout());
     setLocation(200, 200);
-    getContentPane().setBackground(colourBG);
+    getContentPane().setBackground(colourBG1);
 
-    // Create three panels side-by-side.
+    // Create four panels side-by-side.
     panel1 = new JPanel();
     panel2 = new JPanel();
     panel3 = new JPanel();
@@ -49,23 +62,25 @@ public class Application extends JFrame implements ApplicationInterface {
     // Customize Panel 1.
     panel1.setPreferredSize(new Dimension(350, 600));
     panel1.setBorder(new LineBorder(colourBorder, 2));
-    panel1.setBackground(colourBG);
+    panel1.setBackground(colourBG2);
+    textFieldFirstName = new JTextField("Enter a first name", 25);
+    textFieldLastName = new JTextField("Entre a last name", 25);
+
 
     // Customize Panel 2.
     panel2.setPreferredSize(new Dimension(350, 600));
     panel2.setBorder(new LineBorder(colourBorder, 2));
-    panel2.setBackground(colourBG);
+    panel2.setBackground(colourBG2);
 
     // Customize Panel 3.
     panel3.setPreferredSize(new Dimension(350, 600));
     panel3.setBorder(new LineBorder(colourBorder, 2));
-    panel3.setBackground(colourBG);
+    panel3.setBackground(colourBG2);
 
     // Customize Panel 4.
     panel4.setPreferredSize(new Dimension(350, 600));
     panel4.setBorder(new LineBorder(colourBorder, 2));
-    panel4.setBackground(colourBG);
-
+    panel4.setBackground(colourBG2);
 
     pack();
     setVisible(true);
