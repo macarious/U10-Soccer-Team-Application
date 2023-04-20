@@ -65,8 +65,11 @@ public class SoccerTeam implements SoccerTeamInterface {
   @Override
   public void createTeam() throws InsufficientPlayerException {
     if (this.allPlayerList.size() < MIN_TEAM_PLAYERS_COUNT) {
-      throw new InsufficientPlayerException("There are not enough players to form a team.");
+      throw new InsufficientPlayerException("There must 10 or more players to form a team.");
     }
+
+    // Reset team player list.
+    teamPlayerList.clear();
 
     // Creates a team by assigning jersey numbers to up to 20 players (w/the highest skill level).
     this.assignJerseyNumberToTeam();
@@ -110,6 +113,12 @@ public class SoccerTeam implements SoccerTeamInterface {
   @Override
   public String startingLineUpToString() {
     return convertMapToString(this.getStartingLineUp());
+  }
+
+  @Override
+  public void resetSoccerTeam() {
+    this.allPlayerList.clear();
+    this.teamPlayerList.clear();
   }
 
   /**
@@ -213,10 +222,6 @@ public class SoccerTeam implements SoccerTeamInterface {
    * another position will be assigned otherwise.
    */
   private void assignPositions() {
-    // Reset all assigned positions specifically for when new players have been registered after
-    // createTeam has been called. Then, (re)assign positions.
-    teamPlayerList.entrySet().stream().forEach(entry -> entry.getKey().setAssignedPosition(null));
-
     int skillLevel = 5; // Start assigning positions at skill level 5, then move to 4, 3, etc.
     while (skillLevel > 0) {
       // Assign positions to players who have a matching preferred position.

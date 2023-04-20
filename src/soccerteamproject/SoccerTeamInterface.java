@@ -74,4 +74,9 @@ public interface SoccerTeamInterface {
    * @return String, list of starting line up represented as string.
    */
   String startingLineUpToString();
+
+  /**
+   * This method resets the list of players and team players to an empty list.
+   */
+  void resetSoccerTeam();
 }

@@ -53,5 +53,5 @@ public interface ControllerInterface {
   /**
    * Resets the application so user can start over again.
    */
-  void reset();
+  void resetAll();
 }

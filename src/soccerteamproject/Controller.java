@@ -48,6 +48,7 @@ public class Controller implements ControllerInterface {
                          userInput.getBirthDate(),
                          userInput.getPreferredPosition(),
                          userInput.getSkillLevel()); // May throw IllegalArgumentException
+    view.resetAllFields();
   }
 
   @Override
@@ -74,7 +75,9 @@ public class Controller implements ControllerInterface {
   }
 
   @Override
-  public void reset() {
+  public void resetAll() {
+    model.resetSoccerTeam();
     view.resetAllFields();
+    view.resetAllTables();
   }
 }

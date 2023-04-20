@@ -81,4 +81,9 @@ public interface ApplicationInterface {
    * This method resets all the user input fields.
    */
   void resetAllFields();
+
+  /**
+   * This method resets all tables.
+   */
+  void resetAllTables();
 }

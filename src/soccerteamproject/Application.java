@@ -5,15 +5,16 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
-import java.awt.FontMetrics;
 import java.awt.Graphics;
 import java.awt.GridLayout;
-import java.awt.Rectangle;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
@@ -26,6 +27,9 @@ import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.RowSorter;
+import javax.swing.RowSorter.SortKey;
+import javax.swing.SortOrder;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
@@ -33,6 +37,7 @@ import javax.swing.border.TitledBorder;
 import javax.swing.plaf.TabbedPaneUI;
 import javax.swing.plaf.basic.BasicTabbedPaneUI;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableRowSorter;
 
 /**
  * This is an implementation of {@link ApplicationInterface} which uses a graphical user interface.
@@ -50,6 +55,7 @@ public class Application extends JFrame implements ApplicationInterface {
   private static final String[] TABLE_HEADINGS_LINE_UP =
       { "Jersey", "Position", "Last Name", "First Name", "Skill", };
 
+  private final JTabbedPane paneRightOutput;
   private final JTextField textFieldFirstName;
   private final JTextField textFieldLastName;
   private final JFormattedTextField textFieldBirthDate;
@@ -59,6 +65,9 @@ public class Application extends JFrame implements ApplicationInterface {
   private final JButton buttonCreateTeam;
   private final JButton buttonReset;
   private final JLabel messageToUser;
+  private final JTable tableAllPlayers;
+  private final JTable tableTeamPlayers;
+  private final JTable tableStartingLineUp;
   private final DefaultTableModel modelAllPlayers;
   private final DefaultTableModel modelTeamPlayers;
   private final DefaultTableModel modelStartingLineUp;
@@ -99,7 +108,7 @@ public class Application extends JFrame implements ApplicationInterface {
     // Create two panes side-by-side.
     JPanel paneLeftInput =
         new JPanel(); // User input players information and contains buttons which create teams.
-    JTabbedPane paneRightOutput = new JTabbedPane(); // Container for pane2, pane3, and pane4.
+    paneRightOutput = new JTabbedPane(); // Container for pane2, pane3, and pane4.
 
     // Customize Left Pane.
     paneLeftInput.setPreferredSize(new Dimension(350, 480));
@@ -191,7 +200,7 @@ public class Application extends JFrame implements ApplicationInterface {
 
     buttonAddPlayer.setActionCommand("Add Player");
     buttonCreateTeam.setActionCommand("Create Team");
-    buttonReset.setActionCommand("Reset");
+    buttonReset.setActionCommand("Reset All");
 
     // Create a label to display messages to user.
     messageToUser = new JLabel("Please add a player.");
@@ -243,7 +252,7 @@ public class Application extends JFrame implements ApplicationInterface {
     tab1RegisteredPlayers.setBorder(BorderFactory.createCompoundBorder(lineBorderPane1,
                                                                        emptyBorderPane1));
     modelAllPlayers = new DefaultTableModel(TABLE_HEADINGS_ALL, 0);
-    JTable tableAllPlayers = new JTable(modelAllPlayers);
+    tableAllPlayers = new JTable(modelAllPlayers);
     tableAllPlayers.setAutoCreateRowSorter(true);
     tableAllPlayers.getColumnModel().getColumn(0).setPreferredWidth(15); // Index
     tableAllPlayers.getColumnModel().getColumn(1).setPreferredWidth(100); // Last Name
@@ -259,9 +268,9 @@ public class Application extends JFrame implements ApplicationInterface {
     EmptyBorder emptyBorderPane2 = new EmptyBorder(10, 10, 10, 10);
     LineBorder lineBorderPane2 = new LineBorder(colourBorder, 2);
     tab2TeamPlayers.setBorder(BorderFactory.createCompoundBorder(lineBorderPane2,
-                                                                       emptyBorderPane2));
+                                                                 emptyBorderPane2));
     modelTeamPlayers = new DefaultTableModel(TABLE_HEADINGS_TEAM, 0);
-    JTable tableTeamPlayers = new JTable(modelTeamPlayers);
+    tableTeamPlayers = new JTable(modelTeamPlayers);
     tableTeamPlayers.setAutoCreateRowSorter(true);
     tableTeamPlayers.getColumnModel().getColumn(0).setPreferredWidth(100); // Last Name
     tableTeamPlayers.getColumnModel().getColumn(1).setPreferredWidth(100); // First Name
@@ -276,9 +285,9 @@ public class Application extends JFrame implements ApplicationInterface {
     EmptyBorder emptyBorderPane3 = new EmptyBorder(10, 10, 10, 10);
     LineBorder lineBorderPane3 = new LineBorder(colourBorder, 2);
     tab3StartingLineUp.setBorder(BorderFactory.createCompoundBorder(lineBorderPane3,
-                                                                       emptyBorderPane3));
+                                                                    emptyBorderPane3));
     modelStartingLineUp = new DefaultTableModel(TABLE_HEADINGS_LINE_UP, 0);
-    JTable tableStartingLineUp = new JTable(modelStartingLineUp);
+    tableStartingLineUp = new JTable(modelStartingLineUp);
     tableStartingLineUp.setAutoCreateRowSorter(true);
     tableStartingLineUp.getColumnModel().getColumn(0).setPreferredWidth(35); // Jersey
     tableStartingLineUp.getColumnModel().getColumn(1).setPreferredWidth(95); // Position
@@ -319,10 +328,13 @@ public class Application extends JFrame implements ApplicationInterface {
     newUserInput.setLastName(textFieldLastName.getText());
     newUserInput.setPreferredPosition((Position) comboBoxPosition.getSelectedItem());
     newUserInput.setBirthDate(LocalDate.parse(textFieldBirthDate.getText()));
-    newUserInput.setSkillLevel((int) comboBoxSkillLevel.getSelectedItem());
+    int skillLevel = 0;
+    if (Objects.nonNull(comboBoxSkillLevel.getSelectedItem())) {
+      skillLevel = (int) comboBoxSkillLevel.getSelectedItem();
+    }
+    newUserInput.setSkillLevel(skillLevel);
     this.userInput = newUserInput;
-    displayMessage("Player successfully added", colourFont);
-    resetAllFields();
+    displayMessage("Player successfully added.", colourFont);
   }
 
   @Override
@@ -347,10 +359,20 @@ public class Application extends JFrame implements ApplicationInterface {
       modelAllPlayers.addRow(rowData);
       count++;
     }
+    DefaultTableModel model = (DefaultTableModel) tableAllPlayers.getModel();
+    TableRowSorter<DefaultTableModel> sorter = new TableRowSorter<>(model);
+    tableAllPlayers.setRowSorter(sorter);
+
+    List<SortKey> sortKeys = new ArrayList<>();
+    sortKeys.add(new RowSorter.SortKey(1, SortOrder.ASCENDING));
+    sorter.setSortKeys(sortKeys);
+    sorter.sort();
   }
 
   @Override
   public void displayTeamPlayer(Map<PlayerIdentifier, Player> teamPlayerList) {
+    displayMessage("Team has been created.", colourFont);
+
     // Remove all rows in the table.
     modelTeamPlayers.setRowCount(0);
 
@@ -367,6 +389,7 @@ public class Application extends JFrame implements ApplicationInterface {
             entry.getValue().getSkillLevel() };
       modelTeamPlayers.addRow(rowData);
     }
+    paneRightOutput.setSelectedIndex(1);
   }
 
   @Override
@@ -399,6 +422,7 @@ public class Application extends JFrame implements ApplicationInterface {
       }
       features.displayAllPlayer();
     });
+
     buttonCreateTeam.addActionListener(event -> {
       try {
         features.createTeam();
@@ -409,7 +433,8 @@ public class Application extends JFrame implements ApplicationInterface {
       features.displayTeamPlayer();
       features.displayStartingLineUp();
     });
-    buttonReset.addActionListener(event -> features.reset());
+
+    buttonReset.addActionListener(event -> features.resetAll());
   }
 
   @Override
@@ -426,10 +451,7 @@ public class Application extends JFrame implements ApplicationInterface {
 
   @Override
   public boolean isNameInputComplete() {
-    if (textFieldFirstName.getText().isEmpty() || textFieldLastName.getText().isEmpty()) {
-      return false;
-    }
-    return true;
+    return !(textFieldFirstName.getText().isEmpty() || textFieldLastName.getText().isEmpty());
   }
 
   @Override
@@ -439,5 +461,13 @@ public class Application extends JFrame implements ApplicationInterface {
     textFieldBirthDate.setValue(new Date());
     comboBoxPosition.setSelectedIndex(0);
     comboBoxSkillLevel.setSelectedIndex(skillLevels.length - 1);
+  }
+
+  @Override
+  public void resetAllTables() {
+    modelAllPlayers.setRowCount(0);
+    modelTeamPlayers.setRowCount(0);
+    modelStartingLineUp.setRowCount(0);
+    displayMessage("Please enter a player.", colourFont);
   }
 }
