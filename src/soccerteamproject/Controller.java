@@ -75,6 +75,13 @@ public class Controller implements ControllerInterface {
   }
 
   @Override
+  public void addSamplePlayers() {
+    resetAll();
+    model.registerSampleList();
+    displayAllPlayer();
+  }
+
+  @Override
   public void resetAll() {
     model.resetSoccerTeam();
     view.resetAllFields();

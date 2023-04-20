@@ -51,6 +51,11 @@ public interface ControllerInterface {
   void displayStartingLineUp();
 
   /**
+   * Register a list of pre-set players.
+   */
+  void addSamplePlayers();
+
+  /**
    * Resets the application so user can start over again.
    */
   void resetAll();

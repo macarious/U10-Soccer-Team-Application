@@ -583,29 +583,18 @@ public class SoccerTeamTest {
     soccerTeam.registerPlayer("Thiago", "Alcântara", LocalDate.of(2018, 4, 11), Position.MIDFIELDER,
         2);
 
-    StringBuilder expected = new StringBuilder();
-    expected.append("Agüero, Sergio; AGE: 4; SKILL: 2\n");
-    expected.append("Alcântara, Thiago; AGE: 5; SKILL: 2\n");
-    expected.append("Bale, Gareth; AGE: 4; SKILL: 4\n");
-    expected.append("De Bruyne, Kevin; AGE: 4; SKILL: 3\n");
-    expected.append("Dybala, Paulo; AGE: 4; SKILL: 3\n");
-    expected.append("Griezmann, Antoine; AGE: 5; SKILL: 3\n");
-    expected.append("Hazard, Eden; AGE: 5; SKILL: 5\n");
-    expected.append("Jr., Neymar; AGE: 5; SKILL: 1\n");
-    expected.append("Kane, Harry; AGE: 4; SKILL: 2\n");
-    expected.append("Lewandowski, Robert; AGE: 4; SKILL: 5\n");
-    expected.append("Mbappé, Kylian; AGE: 4; SKILL: 2\n");
-    expected.append("Messi, Lionel; AGE: 5; SKILL: 2\n");
-    expected.append("Modrić, Luka; AGE: 7; SKILL: 3\n");
-    expected.append("Neuer, Manuel; AGE: 7; SKILL: 4\n");
-    expected.append("Ramos, Sergio; AGE: 7; SKILL: 1\n");
-    expected.append("Ronaldo, Cristiano; AGE: 8; SKILL: 4\n");
-    expected.append("Salah, Mohamed; AGE: 4; SKILL: 2\n");
-    expected.append("Sterling, Raheem; AGE: 4; SKILL: 5\n");
-    expected.append("Suárez, Luis; AGE: 6; SKILL: 5\n");
-    expected.append("van Dijk, Virgil; AGE: 4; SKILL: 4");
+    String expected = "Agüero, Sergio; AGE: 4; SKILL: 2\n" + "Alcântara, Thiago; AGE: 5; SKILL: 2\n"
+        + "Bale, Gareth; AGE: 4; SKILL: 4\n" + "De Bruyne, Kevin; AGE: 4; SKILL: 3\n"
+        + "Dybala, Paulo; AGE: 4; SKILL: 3\n" + "Griezmann, Antoine; AGE: 5; SKILL: 3\n"
+        + "Hazard, Eden; AGE: 5; SKILL: 5\n" + "Jr., Neymar; AGE: 5; SKILL: 1\n"
+        + "Kane, Harry; AGE: 4; SKILL: 2\n" + "Lewandowski, Robert; AGE: 4; SKILL: 5\n"
+        + "Mbappé, Kylian; AGE: 4; SKILL: 2\n" + "Messi, Lionel; AGE: 5; SKILL: 2\n"
+        + "Modrić, Luka; AGE: 7; SKILL: 3\n" + "Neuer, Manuel; AGE: 7; SKILL: 4\n"
+        + "Ramos, Sergio; AGE: 7; SKILL: 1\n" + "Ronaldo, Cristiano; AGE: 8; SKILL: 4\n"
+        + "Salah, Mohamed; AGE: 4; SKILL: 2\n" + "Sterling, Raheem; AGE: 4; SKILL: 5\n"
+        + "Suárez, Luis; AGE: 6; SKILL: 5\n" + "van Dijk, Virgil; AGE: 4; SKILL: 4";
 
-    assertEquals(expected.toString(), soccerTeam.toString());
+    assertEquals(expected, soccerTeam.toString());
   }
 
   /**
@@ -642,29 +631,18 @@ public class SoccerTeamTest {
     // Create team with 20 registered players.
     soccerTeam.createTeam();
 
-    StringBuilder expected = new StringBuilder();
-    expected.append("08 BENCHED -- Agüero, Sergio\n");
-    expected.append("04 BENCHED -- Alcântara, Thiago\n");
-    expected.append("14 MIDFIELDER -- Bale, Gareth\n");
-    expected.append("17 BENCHED -- De Bruyne, Kevin\n");
-    expected.append("09 BENCHED -- Dybala, Paulo\n");
-    expected.append("06 BENCHED -- Griezmann, Antoine\n");
-    expected.append("12 MIDFIELDER -- Hazard, Eden\n");
-    expected.append("11 BENCHED -- Jr., Neymar\n");
-    expected.append("05 BENCHED -- Kane, Harry\n");
-    expected.append("19 FORWARD -- Lewandowski, Robert\n");
-    expected.append("01 BENCHED -- Mbappé, Kylian\n");
-    expected.append("13 BENCHED -- Messi, Lionel\n");
-    expected.append("07 BENCHED -- Modrić, Luka\n");
-    expected.append("15 MIDFIELDER -- Neuer, Manuel\n");
-    expected.append("18 BENCHED -- Ramos, Sergio\n");
-    expected.append("03 BENCHED -- Ronaldo, Cristiano\n");
-    expected.append("20 BENCHED -- Salah, Mohamed\n");
-    expected.append("16 GOALIE -- Sterling, Raheem\n");
-    expected.append("02 DEFENDER -- Suárez, Luis\n");
-    expected.append("10 DEFENDER -- van Dijk, Virgil");
+    String expected = "08 BENCHED -- Agüero, Sergio\n" + "04 BENCHED -- Alcântara, Thiago\n"
+        + "14 MIDFIELDER -- Bale, Gareth\n" + "17 BENCHED -- De Bruyne, Kevin\n"
+        + "09 BENCHED -- Dybala, Paulo\n" + "06 BENCHED -- Griezmann, Antoine\n"
+        + "12 MIDFIELDER -- Hazard, Eden\n" + "11 BENCHED -- Jr., Neymar\n"
+        + "05 BENCHED -- Kane, Harry\n" + "19 FORWARD -- Lewandowski, Robert\n"
+        + "01 BENCHED -- Mbappé, Kylian\n" + "13 BENCHED -- Messi, Lionel\n"
+        + "07 BENCHED -- Modrić, Luka\n" + "15 MIDFIELDER -- Neuer, Manuel\n"
+        + "18 BENCHED -- Ramos, Sergio\n" + "03 BENCHED -- Ronaldo, Cristiano\n"
+        + "20 BENCHED -- Salah, Mohamed\n" + "16 GOALIE -- Sterling, Raheem\n"
+        + "02 DEFENDER -- Suárez, Luis\n" + "10 DEFENDER -- van Dijk, Virgil";
 
-    assertEquals(expected.toString(), soccerTeam.allTeamPlayerListToString());
+    assertEquals(expected, soccerTeam.allTeamPlayerListToString());
   }
 
   /**
@@ -701,15 +679,11 @@ public class SoccerTeamTest {
     // Create team with 20 registered players.
     soccerTeam.createTeam();
 
-    StringBuilder expected = new StringBuilder();
-    expected.append("16 GOALIE -- Sterling, Raheem\n");
-    expected.append("02 DEFENDER -- Suárez, Luis\n");
-    expected.append("10 DEFENDER -- van Dijk, Virgil\n");
-    expected.append("14 MIDFIELDER -- Bale, Gareth\n");
-    expected.append("12 MIDFIELDER -- Hazard, Eden\n");
-    expected.append("15 MIDFIELDER -- Neuer, Manuel\n");
-    expected.append("19 FORWARD -- Lewandowski, Robert");
+    String expected = "16 GOALIE -- Sterling, Raheem\n" + "02 DEFENDER -- Suárez, Luis\n"
+        + "10 DEFENDER -- van Dijk, Virgil\n" + "14 MIDFIELDER -- Bale, Gareth\n"
+        + "12 MIDFIELDER -- Hazard, Eden\n" + "15 MIDFIELDER -- Neuer, Manuel\n"
+        + "19 FORWARD -- Lewandowski, Robert";
 
-    assertEquals(expected.toString(), soccerTeam.startingLineUpToString());
+    assertEquals(expected, soccerTeam.startingLineUpToString());
   }
 }

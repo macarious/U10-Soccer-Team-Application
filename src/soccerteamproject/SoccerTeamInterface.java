@@ -76,6 +76,11 @@ public interface SoccerTeamInterface {
   String startingLineUpToString();
 
   /**
+   * This method registers a pre-set (sample) list of players.
+   */
+  void registerSampleList();
+
+  /**
    * This method resets the list of players and team players to an empty list.
    */
   void resetSoccerTeam();

@@ -116,6 +116,41 @@ public class SoccerTeam implements SoccerTeamInterface {
   }
 
   @Override
+  public void registerSampleList() {
+    this.registerPlayer("Lionel", "Messi", LocalDate.of(2017, 6, 24), Position.FORWARD, 3);
+    this.registerPlayer("Cristiano", "Ronaldo", LocalDate.of(2015, 2, 5), Position.FORWARD,
+        1);
+    this.registerPlayer("Neymar", "Jr.", LocalDate.of(2018, 2, 5), Position.FORWARD, 3);
+    this.registerPlayer("Kylian", "Mbappé", LocalDate.of(2018, 12, 20), Position.FORWARD, 3);
+    this.registerPlayer("Mohamed", "Salah", LocalDate.of(2018, 6, 15), Position.FORWARD, 4);
+    this.registerPlayer("Sergio", "Agüero", LocalDate.of(2018, 6, 2), Position.FORWARD, 1);
+    this.registerPlayer("Harry", "Kane", LocalDate.of(2018, 7, 28), Position.FORWARD, 5);
+    this.registerPlayer("Robert", "Lewandowski", LocalDate.of(2018, 8, 21), Position.FORWARD,
+        3);
+    this.registerPlayer("Kevin", "De Bruyne", LocalDate.of(2018, 6, 28), Position.MIDFIELDER,
+        3);
+    this.registerPlayer("Luis", "Suárez", LocalDate.of(2017, 1, 24), Position.FORWARD, 1);
+    this.registerPlayer("Manuel", "Neuer", LocalDate.of(2016, 3, 27), Position.GOALIE, 2);
+    this.registerPlayer("Luka", "Modrić", LocalDate.of(2015, 9, 9), Position.MIDFIELDER, 4);
+    this.registerPlayer("Antoine", "Griezmann", LocalDate.of(2018, 3, 21),
+        Position.MIDFIELDER, 2);
+    this.registerPlayer("Eden", "Hazard", LocalDate.of(2018, 1, 7), Position.MIDFIELDER, 5);
+    this.registerPlayer("Raheem", "Sterling", LocalDate.of(2018, 12, 8), Position.FORWARD, 3);
+    this.registerPlayer("Virgil", "van Dijk", LocalDate.of(2018, 7, 8), Position.DEFENDER, 2);
+    this.registerPlayer("Paulo", "Dybala", LocalDate.of(2018, 11, 15), Position.FORWARD, 4);
+    this.registerPlayer("Gareth", "Bale", LocalDate.of(2018, 7, 16), Position.MIDFIELDER, 2);
+    this.registerPlayer("Sergio", "Ramos", LocalDate.of(2016, 3, 30), Position.DEFENDER, 5);
+    this.registerPlayer("Thiago", "Alcântara", LocalDate.of(2018, 4, 11), Position.MIDFIELDER,
+        5);
+    this.registerPlayer("Sadio", "Mane", LocalDate.of(2018, 4, 10), Position.FORWARD, 4);
+    this.registerPlayer("Jan", "Oblak", LocalDate.of(2018, 1, 7), Position.GOALIE, 1);
+    this.registerPlayer("Thomas", "Müller", LocalDate.of(2018, 9, 13), Position.MIDFIELDER,
+        3);
+    this.registerPlayer("Marco", "Reus", LocalDate.of(2018, 5, 31), Position.MIDFIELDER, 1);
+    this.registerPlayer("Karim", "Benzema", LocalDate.of(2017, 12, 19), Position.FORWARD, 1);
+  }
+
+  @Override
   public void resetSoccerTeam() {
     this.allPlayerList.clear();
     this.teamPlayerList.clear();

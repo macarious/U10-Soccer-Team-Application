@@ -136,10 +136,10 @@ public class Player implements Comparable<Player> {
   @Override
   public int compareTo(Player other) {
     // Compare Player by Last name, first name, then birthdate.
-    int result = this.lastName.compareTo(other.lastName);
+    int result = this.lastName.compareToIgnoreCase(other.lastName);
 
     if (result == 0) {
-      result = this.firstName.compareTo(other.firstName);
+      result = this.firstName.compareToIgnoreCase(other.firstName);
     }
 
     if (result == 0) {

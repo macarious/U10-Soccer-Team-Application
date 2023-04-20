@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="AnalysisUIOptions">
+    <option name="ANALYZE_INJECTED_CODE" value="false" />
+  </component>
   <component name="AutoImportSettings">
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
@@ -11,8 +14,11 @@
       <change beforePath="$PROJECT_DIR$/src/soccerteamproject/Controller.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/soccerteamproject/Controller.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/soccerteamproject/ControllerInterface.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/soccerteamproject/ControllerInterface.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/soccerteamproject/Driver.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/soccerteamproject/Driver.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/soccerteamproject/Player.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/soccerteamproject/Player.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/soccerteamproject/SoccerTeam.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/soccerteamproject/SoccerTeam.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/soccerteamproject/SoccerTeamInterface.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/soccerteamproject/SoccerTeamInterface.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/soccerteamproject/UserInput.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/soccerteamproject/UserInput.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test/soccerteamproject/SoccerTeamTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/test/soccerteamproject/SoccerTeamTest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -35,6 +41,9 @@
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
   </component>
+  <component name="ProblemsViewState">
+    <option name="selectedTabId" value="CurrentFile" />
+  </component>
   <component name="ProjectId" id="2Nt51N58urN3SJsDtVpK4vhgbZT" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectViewState">
@@ -53,13 +62,13 @@
     "WebServerToolWindowFactoryState": "false",
     "com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrary": "JUnit4",
     "com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrarySuperClass.JUnit4": "",
-    "last_opened_file_path": "G:/My Drive/School/2023 - Spring/CS5004/Module 10 - MVC Example",
+    "last_opened_file_path": "G:/My Drive/School/2023 - Spring/CS5004/CS-5004-Soccer-Team-Application",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",
     "run.code.analysis.last.selected.profile": "pProject Default",
-    "settings.editor.selected.configurable": "preferences.sourceCode.Java",
+    "settings.editor.selected.configurable": "reference.settings.ide.settings.uml",
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
@@ -161,8 +170,8 @@
       <workItem from="1681583180066" duration="6557000" />
       <workItem from="1681718041917" duration="31000" />
       <workItem from="1681751954524" duration="13394000" />
-      <workItem from="1681767012332" duration="6750000" />
-      <workItem from="1681924818238" duration="31809000" />
+      <workItem from="1681767012332" duration="6769000" />
+      <workItem from="1682015344605" duration="6543000" />
     </task>
     <task id="LOCAL-00001" summary="Add 4 initial frames to view.">
       <created>1681585226508</created>

@@ -1,6 +1,5 @@
 package soccerteamproject;
 
-import java.awt.Color;
 import java.util.Map;
 import java.util.Set;
 
@@ -58,17 +57,6 @@ public interface ApplicationInterface {
    */
 
   void addFeatures(ControllerInterface features);
-
-  /**
-   * Resets the focus of the application to default.
-   */
-
-  void resetFocus();
-
-  /**
-   * This method displays a message to the user.
-   */
-  void displayMessage(String message, Color fontColour);
 
   /**
    * This method validate if the name inputs are completed.
