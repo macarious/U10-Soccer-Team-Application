@@ -10,15 +10,6 @@
     <list default="true" id="5e511721-0ddc-4f47-9002-d327da4f8754" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/soccerteamproject/Application.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/soccerteamproject/Application.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/soccerteamproject/ApplicationInterface.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/soccerteamproject/ApplicationInterface.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/soccerteamproject/Controller.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/soccerteamproject/Controller.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/soccerteamproject/ControllerInterface.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/soccerteamproject/ControllerInterface.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/soccerteamproject/Driver.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/soccerteamproject/Driver.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/soccerteamproject/Player.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/soccerteamproject/Player.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/soccerteamproject/SoccerTeam.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/soccerteamproject/SoccerTeam.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/soccerteamproject/SoccerTeamInterface.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/soccerteamproject/SoccerTeamInterface.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/soccerteamproject/UserInput.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/soccerteamproject/UserInput.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/test/soccerteamproject/SoccerTeamTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/test/soccerteamproject/SoccerTeamTest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -171,7 +162,7 @@
       <workItem from="1681718041917" duration="31000" />
       <workItem from="1681751954524" duration="13394000" />
       <workItem from="1681767012332" duration="6769000" />
-      <workItem from="1682015344605" duration="6543000" />
+      <workItem from="1682015344605" duration="6983000" />
     </task>
     <task id="LOCAL-00001" summary="Add 4 initial frames to view.">
       <created>1681585226508</created>

@@ -247,7 +247,7 @@ public class Application extends JFrame implements ApplicationInterface {
     insets.right = 1;
     UIManager.put("TabbedPane.contentBorderInsets", insets);
 
-    paneRightOutput.setPreferredSize(new Dimension(600, 480));
+    paneRightOutput.setPreferredSize(new Dimension(600, 475));
     JPanel tab1RegisteredPlayers = new JPanel(); // Display all registered players.
     JPanel tab2TeamPlayers = new JPanel(); // Display the list of team players after team has been created.
     JPanel tab3StartingLineUp = new JPanel(); // Display the starting line up after team has been created.
@@ -486,7 +486,7 @@ public class Application extends JFrame implements ApplicationInterface {
    */
   private void displayMessage(String message, Color fontColour) {
     EmptyBorder emptyBorder = new EmptyBorder(5, 5, 5, 5);
-    LineBorder lineBorder = new LineBorder(fontColour, 1);
+    LineBorder lineBorder = new LineBorder(fontColour, 0);
     messageToUser.setBorder(BorderFactory.createCompoundBorder(lineBorder, emptyBorder));
     messageToUser.setText(message);
     messageToUser.setHorizontalAlignment(SwingConstants.CENTER);
