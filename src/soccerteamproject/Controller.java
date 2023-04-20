@@ -1,5 +1,9 @@
 package soccerteamproject;
 
+import java.time.format.DateTimeParseException;
+import java.util.Map;
+import java.util.Set;
+
 /**
  * This class represents a controller (implementing {@link ControllerInterface}) for a soccer team
  * application. It communicates with the model: {@link SoccerTeamInterface} and the view:
@@ -9,41 +13,68 @@ package soccerteamproject;
 public class Controller implements ControllerInterface {
 
   private final SoccerTeamInterface model;
-  private final ApplicationInterface gui;
+  private final ApplicationInterface view;
+
   /**
    * This is a constructor. It creates an object representing a controller which communicates with
    * the specified model and view.
    *
    * @param model {@link SoccerTeamInterface} the model used by the controller.
-   * @param view {@link ApplicationInterface} the view used by the controller.
+   * @param view  {@link ApplicationInterface} the view used by the controller.
    */
   public Controller(SoccerTeamInterface model, ApplicationInterface view) {
     this.model = model;
-    this.gui = view;
+    this.view = view;
+    view.addFeatures(this);
   }
 
   @Override
   public void exitProgram() {
-
+    System.exit(0);
   }
 
   @Override
-  public void addNewPlayer() {
+  public void addNewPlayer()
+      throws MissingInfoException, DateTimeParseException, IllegalArgumentException,
+             DuplicatePlayerException {
+    if (!view.isNameInputComplete()) {
+      throw new MissingInfoException("The name fields must be filled in order to add a player.");
+    }
 
+    view.addPlayer(); // May throw DateTimeParseException.
+    UserInput userInput = view.getUserInput();
+    model.registerPlayer(userInput.getFirstName(),
+                         userInput.getLastName(),
+                         userInput.getBirthDate(),
+                         userInput.getPreferredPosition(),
+                         userInput.getSkillLevel()); // May throw IllegalArgumentException
   }
 
   @Override
   public void displayAllPlayer() {
+    Set<Player> allPlayers = model.getAllPlayerList();
+    view.displayAllPlayer(allPlayers);
+  }
 
+  @Override
+  public void createTeam() {
+    model.createTeam();
   }
 
   @Override
   public void displayTeamPlayer() {
-
+    Map<PlayerIdentifier, Player> teamPlayers = model.getTeamPlayerList();
+    view.displayTeamPlayer(teamPlayers);
   }
 
   @Override
   public void displayStartingLineUp() {
+    Map<PlayerIdentifier, Player> startingLineUp = model.getStartingLineUp();
+    view.displayStartingLineUp(startingLineUp);
+  }
 
+  @Override
+  public void reset() {
+    view.resetAllFields();
   }
 }

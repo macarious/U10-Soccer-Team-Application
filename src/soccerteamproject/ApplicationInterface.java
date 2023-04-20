@@ -1,5 +1,9 @@
 package soccerteamproject;
 
+import java.awt.Color;
+import java.util.Map;
+import java.util.Set;
+
 /**
  * This class represents a user interface for the Soccer Team application. It is used by the
  * {@link ControllerInterface} class. It allows user to input information about a new player and add
@@ -10,29 +14,42 @@ package soccerteamproject;
 public interface ApplicationInterface {
   /**
    * Register a new player when all the player information has been input by the user.
-   *
-   * @throws MissingInfoException if there is missing information from the user.
-   * @throws DuplicatePlayerException if a player of the exact information has already been input.
    */
-  void addPlayer() throws MissingInfoException, DuplicatePlayerException;
+  void addPlayer();
+
+  /**
+   * This method gets the UserInput objects containing all the information that is currently in the
+   * text fields and combo boxes.
+   *
+   * @return {@link UserInput}, user input currently on the application.
+   */
+  UserInput getUserInput();
 
   /**
    * Display a list of all registered players.
+   *
+   * @param allPlayerList {@link Set}<{@link Player}> List of soccer players on the team.
    */
 
-  void displayAllPlayer();
+  void displayAllPlayer(Set<Player> allPlayerList);
 
   /**
    * Display a list of all players selected to be on the team.
+   *
+   * @param teamPlayerList {@link Map} of {@link PlayerIdentifier}, {@link Player}, soccer players
+   *                       on team.
    */
 
-  void displayTeamPlayer();
+  void displayTeamPlayer(Map<PlayerIdentifier, Player> teamPlayerList);
 
   /**
    * Display a list of all players on the starting line up.
+   *
+   * @param startingLineUp {@link Map} of {@link PlayerIdentifier}, {@link Player}, starting line up
+   *                       on team.
    */
 
-  void displayStartingLineUp();
+  void displayStartingLineUp(Map<PlayerIdentifier, Player> startingLineUp);
 
   /**
    * Add the features from the controller to the appropriate components in the view.
@@ -47,4 +64,21 @@ public interface ApplicationInterface {
    */
 
   void resetFocus();
+
+  /**
+   * This method displays a message to the user.
+   */
+  void displayMessage(String message, Color fontColour);
+
+  /**
+   * This method validate if the name inputs are completed.
+   *
+   * @return boolean, true if completed and false otherwise.
+   */
+  boolean isNameInputComplete();
+
+  /**
+   * This method resets all the user input fields.
+   */
+  void resetAllFields();
 }

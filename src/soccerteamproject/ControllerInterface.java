@@ -1,5 +1,7 @@
 package soccerteamproject;
 
+import java.time.format.DateTimeParseException;
+
 /**
  * This class represents a controller for a soccer team application. It talks to a model:
  * {@link SoccerTeamInterface} and a view {@link ApplicationInterface}. The model register players,
@@ -19,8 +21,22 @@ public interface ControllerInterface {
 
   /**
    * Displays a list of all the registered players and their information.
+   *
+   * @throws MissingInfoException                    if there is missing information from the user.
+   * @throws java.time.format.DateTimeParseException if birthdate is not in yyyy/MM/dd format.
+   * @throws IllegalArgumentException                if the birthdate input does not correspond to a
+   *                                                 valid age.
+   * @throws DuplicatePlayerException                if a player of the exact information has
+   *                                                 already been input.
    */
-  void displayAllPlayer();
+  void displayAllPlayer()
+      throws MissingInfoException, DateTimeParseException, IllegalArgumentException,
+             DuplicatePlayerException;
+
+  /**
+   * Creates a team with the registered players.
+   */
+  void createTeam();
 
   /**
    * Displays a list of all the players assigned to the team, along with their jersey numbers and
@@ -33,4 +49,9 @@ public interface ControllerInterface {
    * numbers and assigned positions.
    */
   void displayStartingLineUp();
+
+  /**
+   * Resets the application so user can start over again.
+   */
+  void reset();
 }

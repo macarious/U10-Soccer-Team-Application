@@ -110,8 +110,11 @@ public class Player implements Comparable<Player> {
 
   @Override
   public int hashCode() {
-    return Objects.hash(this.firstName, this.lastName, this.birthdate, this.preferredPosition,
-        this.skillLevel);
+    return Objects.hash(this.firstName,
+                        this.lastName,
+                        this.birthdate,
+                        this.preferredPosition,
+                        this.skillLevel);
   }
 
   @Override
@@ -123,8 +126,9 @@ public class Player implements Comparable<Player> {
       return false;
     }
     Player otherPlayer = (Player) other;
-    return this.firstName.equals(otherPlayer.firstName) && this.lastName.equals(
-        otherPlayer.lastName) && this.birthdate.equals(otherPlayer.birthdate)
+    return this.firstName.equals(otherPlayer.firstName)
+        && this.lastName.equals(otherPlayer.lastName)
+        && this.birthdate.equals(otherPlayer.birthdate)
         && this.preferredPosition == otherPlayer.preferredPosition
         && this.skillLevel == otherPlayer.skillLevel;
   }
