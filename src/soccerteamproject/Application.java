@@ -102,6 +102,7 @@ public class Application extends JFrame implements ApplicationInterface {
   private Color colourTabBG;
   private Color colourTabBGSelected;
   private Color colourTabFont;
+  private Color colourError;
   private Font titleFont;
   private Font buttonFont1;
   private Font buttonFont2;
@@ -112,7 +113,6 @@ public class Application extends JFrame implements ApplicationInterface {
    * team and starting line up.
    */
   public Application() {
-
     setDarkMode(); // Default colour scheme.
     createComponents();
     constructApplication();
@@ -182,10 +182,10 @@ public class Application extends JFrame implements ApplicationInterface {
       try {
         features.addNewPlayer();
       } catch (MissingInfoException | IllegalArgumentException e) {
-        displayMessage(e.getMessage(), Color.RED);
+        displayMessage(e.getMessage(), colourError);
         return;
       } catch (DateTimeParseException e) {
-        displayMessage("Date must be in the format yyyy-mm-dd", Color.RED);
+        displayMessage("Date must be in the format yyyy-mm-dd", colourError);
         return;
       }
       features.displayAllPlayer();
@@ -197,7 +197,7 @@ public class Application extends JFrame implements ApplicationInterface {
       try {
         features.createTeam();
       } catch (InsufficientPlayerException e) {
-        displayMessage(e.getMessage(), Color.RED);
+        displayMessage(e.getMessage(), colourError);
         return;
       }
       features.displayTeamPlayer();
@@ -296,13 +296,14 @@ public class Application extends JFrame implements ApplicationInterface {
     colourBorder = Color.ORANGE;
     colourFont = Color.WHITE;
     colourTabBGSelected = Color.DARK_GRAY;
+    colourButtonBG2 = Color.LIGHT_GRAY;
+    colourButtonFont2 = Color.BLACK;
+    colourError = Color.PINK;
     isDarkMode = true;
 
     // Does not change between dark and light mode.
     colourButtonBG1 = Color.ORANGE;
     colourButtonFont1 = Color.BLACK;
-    colourButtonBG2 = Color.LIGHT_GRAY;
-    colourButtonFont2 = Color.BLACK;
     colourTabBG = Color.ORANGE;
     colourTabFont = Color.DARK_GRAY;
     titleFont = new Font(Font.SANS_SERIF, Font.BOLD, 24);
@@ -316,11 +317,14 @@ public class Application extends JFrame implements ApplicationInterface {
   private void toggleDarkLightMode() {
     if (isDarkMode) {
       // Convert to Light Mode.
-      colourBG1 = Color.GRAY;
+      colourBG1 = Color.LIGHT_GRAY;
       colourBG2 = Color.LIGHT_GRAY;
       colourBorder = Color.BLACK;
       colourFont = Color.BLACK;
       colourTabBGSelected = Color.LIGHT_GRAY;
+      colourButtonBG2 = Color.GRAY;
+      colourButtonFont2 = Color.WHITE;
+      colourError = Color.RED;
       isDarkMode = false;
     } else {
       // Convert back to Dark Mode.
@@ -405,12 +409,16 @@ public class Application extends JFrame implements ApplicationInterface {
    * This method constructs the main application frame.
    */
   private void constructApplication() {
-
+    // Define layout of components.
+    setLayout(new FlowLayout(FlowLayout.CENTER, 10, 10));
+    paneLeftInput.setLayout(new GridLayout(10, 1, 10, 10));
     panelFirstName.setLayout(new BorderLayout(5, 5));
     panelLastName.setLayout(new BorderLayout(5, 5));
     panelBirthDate.setLayout(new BorderLayout(5, 5));
     panelSkillLevel.setLayout(new BorderLayout(5, 5));
     panelPosition.setLayout(new BorderLayout(5, 5));
+    containerButtonGroup1.setLayout(new GridLayout(1, 2, 5, 5));
+    containerButtonGroup2.setLayout(new GridLayout(1, 2, 5, 5));
 
     // Construct left pane.
     panelFirstName.add(labelFirstName, BorderLayout.WEST);
@@ -454,7 +462,6 @@ public class Application extends JFrame implements ApplicationInterface {
   private void configureApplication() {
     setTitle("Soccer Team Application");
     setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-    setLayout(new FlowLayout(FlowLayout.CENTER, 10, 10));
     setLocation(200, 200);
     setResizable(false);
     getContentPane().setBackground(colourBG1);
@@ -469,7 +476,6 @@ public class Application extends JFrame implements ApplicationInterface {
     titledBorderpaneLeft.setBorder(new LineBorder(colourFont, 2));
     paneLeftInput.setBorder(BorderFactory.createCompoundBorder(titledBorderpaneLeft,
                                                                emptyBorderPaneLeft));
-    paneLeftInput.setLayout(new GridLayout(10, 1, 10, 10));
 
     // Customize sub-panels for Left Pane.
     configureFieldPanel(panelFirstName);
@@ -479,7 +485,6 @@ public class Application extends JFrame implements ApplicationInterface {
     configureFieldPanel(panelSkillLevel);
 
     // Customize labels for each field.
-
     labelFirstName.setForeground(colourFont);
     labelLastName.setForeground(colourFont);
     labelBirthDate.setForeground(colourFont);
@@ -493,6 +498,10 @@ public class Application extends JFrame implements ApplicationInterface {
     // Customize formatted text field ranging from 80 years ago to current date.
     configureTextField(textFieldBirthDate);
 
+    // Customize combo boxes.
+    comboBoxPosition.setPreferredSize(new Dimension(102, comboBoxPosition.getHeight()));
+    comboBoxSkillLevel.setPreferredSize(new Dimension(102, comboBoxSkillLevel.getHeight()));
+
     // Customize buttons.
     configureButton1(buttonAddPlayer);
     configureButton1(buttonCreateTeam);
@@ -505,10 +514,7 @@ public class Application extends JFrame implements ApplicationInterface {
     displayMessage("Please register a player.", colourFont);
 
     // Customize sub-panes for lesser buttons.
-    containerButtonGroup1.setLayout(new GridLayout(1, 2, 5, 5));
     containerButtonGroup1.setBackground(colourBG1);
-
-    containerButtonGroup2.setLayout(new GridLayout(1, 2, 5, 5));
     containerButtonGroup2.setBackground(colourBG1);
 
     // Customize Right Panel (Tab #1, 2, 3).
@@ -517,7 +523,7 @@ public class Application extends JFrame implements ApplicationInterface {
 
     // Remove the white line under a tab button
     Insets insets = UIManager.getInsets("TabbedPane.contentBorderInsets");
-    insets.top = 0;
+    insets.top = -1;
     insets.bottom = 0;
     insets.left = 0;
     insets.right = 0;
@@ -557,8 +563,6 @@ public class Application extends JFrame implements ApplicationInterface {
     paneRightOutput.setBackgroundAt(2, colourTabBG);
     paneRightOutput.setForegroundAt(2, colourTabFont);
   }
-
-
 
   /**
    * This method configures a JPanel using consistent formatting.

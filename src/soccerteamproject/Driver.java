@@ -1,6 +1,5 @@
 package soccerteamproject;
 
-import java.time.LocalDate;
 import java.util.Random;
 
 /**
@@ -20,6 +19,6 @@ public class Driver {
 
     // Application with gui.
     ApplicationInterface gui = new Application();
-    ControllerInterface controller = new Controller(soccerTeam, gui);
+    new Controller(soccerTeam, gui);
   }
 }
