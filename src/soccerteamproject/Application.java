@@ -257,7 +257,7 @@ public class Application extends JFrame implements ApplicationInterface {
     EmptyBorder emptyBorder = new EmptyBorder(5, 5, 5, 5);
     LineBorder lineBorder = new LineBorder(fontColour, 0);
     messageToUser.setBorder(BorderFactory.createCompoundBorder(lineBorder, emptyBorder));
-    messageToUser.setText(message);
+    messageToUser.setText("<html>" + message + "</html>");
     messageToUser.setHorizontalAlignment(SwingConstants.CENTER);
     messageToUser.setForeground(fontColour);
   }
@@ -358,7 +358,7 @@ public class Application extends JFrame implements ApplicationInterface {
     labelLastName = new JLabel("Last Name: ");
     labelBirthDate = new JLabel("Birth Date (yyyy-mm-dd): ");
     labelPosition = new JLabel("Preferred Position: ");
-    labelSkillLevel = new JLabel("Skill Level: ");
+    labelSkillLevel = new JLabel("Skill Level (highest = 5): ");
     textFieldFirstName = new JTextField();
     textFieldLastName = new JTextField();
     textFieldBirthDate = new JFormattedTextField(new SimpleDateFormat("yyyy-MM-dd"));
@@ -386,14 +386,15 @@ public class Application extends JFrame implements ApplicationInterface {
 
     // Set fields to default.
     resetAllFields();
+    displayMessage("Please register a player.", colourFont);
 
     // Right pane for display.
     // Table for all registered players.
     // Table for all team players.
     // Table for starting line up.
-    modelAllPlayers = new DefaultTableModel(TABLE_HEADINGS_ALL, 0);
-    modelTeamPlayers = new DefaultTableModel(TABLE_HEADINGS_TEAM, 0);
-    modelStartingLineUp = new DefaultTableModel(TABLE_HEADINGS_TEAM, 0);
+    modelAllPlayers = createNewNotEditableTableModel(TABLE_HEADINGS_ALL);
+    modelTeamPlayers = createNewNotEditableTableModel(TABLE_HEADINGS_TEAM);
+    modelStartingLineUp = createNewNotEditableTableModel(TABLE_HEADINGS_TEAM);
     tab1RegisteredPlayers = new JPanel();
     tab2TeamPlayers = new JPanel();
     tab3StartingLineUp = new JPanel();
@@ -410,6 +411,9 @@ public class Application extends JFrame implements ApplicationInterface {
    */
   private void constructApplication() {
     // Define layout of components.
+    setLocation(200, 200);
+    setResizable(false);
+
     setLayout(new FlowLayout(FlowLayout.CENTER, 10, 10));
     paneLeftInput.setLayout(new GridLayout(10, 1, 10, 10));
     panelFirstName.setLayout(new BorderLayout(5, 5));
@@ -462,12 +466,10 @@ public class Application extends JFrame implements ApplicationInterface {
   private void configureApplication() {
     setTitle("Soccer Team Application");
     setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-    setLocation(200, 200);
-    setResizable(false);
     getContentPane().setBackground(colourBG1);
 
     // Customize Left Pane.
-    paneLeftInput.setPreferredSize(new Dimension(380, 480));
+    paneLeftInput.setPreferredSize(new Dimension(330, 482));
     paneLeftInput.setBackground(colourBG1);
     EmptyBorder emptyBorderPaneLeft = new EmptyBorder(10, 10, 10, 10);
     TitledBorder titledBorderpaneLeft = new TitledBorder("Player Registration");
@@ -499,8 +501,13 @@ public class Application extends JFrame implements ApplicationInterface {
     configureTextField(textFieldBirthDate);
 
     // Customize combo boxes.
-    comboBoxPosition.setPreferredSize(new Dimension(102, comboBoxPosition.getHeight()));
-    comboBoxSkillLevel.setPreferredSize(new Dimension(102, comboBoxSkillLevel.getHeight()));
+    comboBoxPosition.setPreferredSize(new Dimension(136, comboBoxPosition.getHeight()));
+    comboBoxSkillLevel.setPreferredSize(new Dimension(136, comboBoxSkillLevel.getHeight()));
+
+    // Configure message label.
+    if (messageToUser.getForeground() != colourFont) {
+      messageToUser.setForeground(colourError);
+    }
 
     // Customize buttons.
     configureButton1(buttonAddPlayer);
@@ -509,9 +516,6 @@ public class Application extends JFrame implements ApplicationInterface {
     configureButton2(buttonReset);
     configureButton2(buttonDarkLightMode);
     configureButton2(buttonExit);
-
-    // Customize a label to display messages to user.
-    displayMessage("Please register a player.", colourFont);
 
     // Customize sub-panes for lesser buttons.
     containerButtonGroup1.setBackground(colourBG1);
@@ -523,10 +527,10 @@ public class Application extends JFrame implements ApplicationInterface {
 
     // Remove the white line under a tab button
     Insets insets = UIManager.getInsets("TabbedPane.contentBorderInsets");
-    insets.top = -1;
-    insets.bottom = 0;
-    insets.left = 0;
-    insets.right = 0;
+    insets.top = 5;
+    insets.bottom = 2;
+    insets.left = 2;
+    insets.right = 2;
     UIManager.put("TabbedPane.contentBorderInsets", insets);
 
     // Customize Tab 1.
@@ -654,8 +658,22 @@ public class Application extends JFrame implements ApplicationInterface {
    */
   private void configureTabPanel(JPanel tabPanel) {
     tabPanel.setBackground(colourTabBGSelected);
-    EmptyBorder emptyBorderPane1 = new EmptyBorder(10, 10, 10, 10);
+    EmptyBorder emptyBorderPane1 = new EmptyBorder(5, 10, 10, 10);
     LineBorder lineBorderPane1 = new LineBorder(colourBorder, 0);
     tabPanel.setBorder(BorderFactory.createCompoundBorder(lineBorderPane1, emptyBorderPane1));
+  }
+
+  /**
+   * This method creates a new not editable table model.
+   *
+   * @return {@link DefaultTableModel}, table model which is not editable.
+   */
+  private DefaultTableModel createNewNotEditableTableModel(String[] headings) {
+    return new DefaultTableModel(headings, 0) {
+      @Override
+      public boolean isCellEditable(int row, int column) {
+        return false;
+      }
+    };
   }
 }
