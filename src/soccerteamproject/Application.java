@@ -5,7 +5,6 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
-import java.awt.Graphics;
 import java.awt.GridLayout;
 import java.awt.Insets;
 import java.text.SimpleDateFormat;
@@ -27,13 +26,12 @@ import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.JViewport;
 import javax.swing.SwingConstants;
 import javax.swing.UIManager;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
-import javax.swing.plaf.TabbedPaneUI;
-import javax.swing.plaf.basic.BasicTabbedPaneUI;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -44,300 +42,83 @@ import javax.swing.table.DefaultTableModel;
  */
 public class Application extends JFrame implements ApplicationInterface {
 
-  private static final Integer[] skillLevels = { 1, 2, 3, 4, 5 };
-  private static final String[] TABLE_HEADINGS_ALL = { "#", "Last Name", "First Name",
-      "Preferred Position", "Age", "Skill" };
-  private static final String[] TABLE_HEADINGS_TEAM = { "Jersey", "Last Name", "First Name",
-      "Assigned Position", "Age", "Skill", };
-  private static final String[] TABLE_HEADINGS_LINE_UP = { "Jersey", "Last Name", "First Name",
-      "Assigned Position", "Age", "Skill", };
+  private static final Integer[] SKILL_LEVELS = { 1, 2, 3, 4, 5 };
+  private static final String[] TABLE_HEADINGS_ALL =
+      { "#", "Last Name", "First Name", "Preferred Position", "Age", "Skill" };
+  private static final String[] TABLE_HEADINGS_TEAM =
+      { "Jersey", "Last Name", "First Name", "Assigned Position", "Age", "Skill", };
 
-  private final JTabbedPane paneRightOutput;
-  private final JTextField textFieldFirstName;
-  private final JTextField textFieldLastName;
-  private final JFormattedTextField textFieldBirthDate;
-  private final JComboBox<Position> comboBoxPosition;
-  private final JComboBox<Integer> comboBoxSkillLevel;
-  private final JButton buttonAddPlayer;
-  private final JButton buttonCreateTeam;
-  private final JButton buttonUseSample;
-  private final JButton buttonReset;
-  private final JLabel messageToUser;
-  private final JTable tableAllPlayers;
-  private final JTable tableTeamPlayers;
-  private final JTable tableStartingLineUp;
-  private final DefaultTableModel modelAllPlayers;
-  private final DefaultTableModel modelTeamPlayers;
-  private final DefaultTableModel modelStartingLineUp;
+  // Components in the application.
+  private JPanel paneLeftInput;
+  private JTabbedPane paneRightOutput;
+  private JPanel panelFirstName;
+  private JPanel panelLastName;
+  private JPanel panelBirthDate;
+  private JPanel panelPosition;
+  private JPanel panelSkillLevel;
+  private JLabel labelFirstName;
+  private JLabel labelLastName;
+  private JLabel labelBirthDate;
+  private JLabel labelPosition;
+  private JLabel labelSkillLevel;
+  private JTextField textFieldFirstName;
+  private JTextField textFieldLastName;
+  private JFormattedTextField textFieldBirthDate;
+  private JComboBox<Position> comboBoxPosition;
+  private JComboBox<Integer> comboBoxSkillLevel;
+  private JButton buttonAddPlayer;
+  private JButton buttonCreateTeam;
+  private JButton buttonUseSample;
+  private JButton buttonReset;
+  private JButton buttonDarkLightMode;
+  private JButton buttonExit;
+  private JLabel messageToUser;
+  private JPanel containerButtonGroup1;
+  private JPanel containerButtonGroup2;
+  private DefaultTableModel modelAllPlayers;
+  private DefaultTableModel modelTeamPlayers;
+  private DefaultTableModel modelStartingLineUp;
+  private JPanel tab1RegisteredPlayers;
+  private JPanel tab2TeamPlayers;
+  private JPanel tab3StartingLineUp;
+  private JTable tableAllPlayers;
+  private JTable tableTeamPlayers;
+  private JTable tableStartingLineUp;
+  private JScrollPane scrollPane1;
+  private JScrollPane scrollPane2;
+  private JScrollPane scrollPane3;
   private UserInput userInput;
-  private final Color colourBG1;
-  private final Color colourBG2;
-  private final Color colourBorder;
-  private final Color colourFont;
-  private final Color colourButtonBG;
-  private final Color colourButtonFont;
-  private final Color colourTabBG;
-  private final Color colourTabBGSelected;
-  private final Color colourTabFont;
-  private final Font titleFont;
-  private final Font buttonFont;
 
+  // Colours used in application.
+  private boolean isDarkMode;
+  private Color colourBG1;
+  private Color colourBG2;
+  private Color colourBorder;
+  private Color colourFont;
+  private Color colourButtonBG1;
+  private Color colourButtonFont1;
+  private Color colourButtonBG2;
+  private Color colourButtonFont2;
+  private Color colourTabBG;
+  private Color colourTabBGSelected;
+  private Color colourTabFont;
+  private Font titleFont;
+  private Font buttonFont1;
+  private Font buttonFont2;
+
+  /**
+   * This is a construction for the Application class. It builds and configures a graphical user
+   * interface, and its main functions are to register players, create teams, and display created
+   * team and starting line up.
+   */
   public Application() {
-    userInput = new UserInput(); // Empty user input.
 
-    // Default colours (Dark Mode).
-    colourBG1 = Color.BLACK;
-    colourBG2 = Color.DARK_GRAY;
-    colourBorder = Color.ORANGE;
-    colourFont = Color.WHITE;
-    colourButtonBG = Color.ORANGE;
-    colourButtonFont = Color.DARK_GRAY;
-    colourTabBG = Color.ORANGE;
-    colourTabBGSelected = Color.GRAY;
-    colourTabFont = Color.BLACK;
-    titleFont = new Font(Font.SANS_SERIF, Font.BOLD, 24);
-    buttonFont = new Font(Font.SANS_SERIF, Font.BOLD, 16);
-
-    // Set up main application frame.
-    setTitle("Soccer Team Application");
-    setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-    setLayout(new FlowLayout(FlowLayout.CENTER, 10, 10));
-    setLocation(200, 200);
-    getContentPane().setBackground(colourBG1);
-    setResizable(false);
-
-    // Create two panes side-by-side.
-    JPanel paneLeftInput = new JPanel(); // User input players information and contains buttons which create teams.
-    paneRightOutput = new JTabbedPane(); // Container for pane2, pane3, and pane4.
-
-    // Customize Left Pane.
-    paneLeftInput.setPreferredSize(new Dimension(380, 480));
-    paneLeftInput.setBackground(colourBG2);
-    EmptyBorder emptyBorderPaneLeft = new EmptyBorder(10, 10, 10, 10);
-    TitledBorder titledBorderpaneLeft = new TitledBorder("Player Registration");
-    titledBorderpaneLeft.setTitleFont(titleFont);
-    titledBorderpaneLeft.setTitleColor(colourFont);
-    paneLeftInput.setBorder(
-        BorderFactory.createCompoundBorder(titledBorderpaneLeft, emptyBorderPaneLeft));
-    paneLeftInput.setLayout(new GridLayout(10, 1, 10, 10));
-
-    // Create sub-panels for Left Pane.
-    JPanel panelFirstName = new JPanel();
-    JPanel panelLastName = new JPanel();
-    JPanel panelBirthDate = new JPanel();
-    JPanel panelPosition = new JPanel();
-    JPanel panelSkillLevel = new JPanel();
-
-    EmptyBorder emptyBorderSubPanel = new EmptyBorder(5, 5, 5, 5);
-    LineBorder lineBorderSubPanel = new LineBorder(colourBorder, 1);
-    panelFirstName.setBorder(
-        BorderFactory.createCompoundBorder(lineBorderSubPanel, emptyBorderSubPanel));
-    panelLastName.setBorder(
-        BorderFactory.createCompoundBorder(lineBorderSubPanel, emptyBorderSubPanel));
-    panelBirthDate.setBorder(
-        BorderFactory.createCompoundBorder(lineBorderSubPanel, emptyBorderSubPanel));
-    panelPosition.setBorder(
-        BorderFactory.createCompoundBorder(lineBorderSubPanel, emptyBorderSubPanel));
-    panelSkillLevel.setBorder(
-        BorderFactory.createCompoundBorder(lineBorderSubPanel, emptyBorderSubPanel));
-
-    panelFirstName.setBackground(colourBG2);
-    panelLastName.setBackground(colourBG2);
-    panelBirthDate.setBackground(colourBG2);
-    panelPosition.setBackground(colourBG2);
-    panelSkillLevel.setBackground(colourBG2);
-
-    panelFirstName.setLayout(new BorderLayout(5, 5));
-    panelLastName.setLayout(new BorderLayout(5, 5));
-    panelBirthDate.setLayout(new BorderLayout(5, 5));
-    panelPosition.setLayout(new BorderLayout(5, 5));
-    panelSkillLevel.setLayout(new BorderLayout(5, 5));
-
-    // Create labels for each field.
-    JLabel labelFirstName = new JLabel("First Name: ");
-    JLabel labelLastName = new JLabel("Last Name: ");
-    JLabel labelBirthDate = new JLabel("Birth Date (yyyy-mm-dd): ");
-    JLabel labelPosition = new JLabel("Preferred Position: ");
-    JLabel labelSkillLevel = new JLabel("Skill Level: ");
-
-    labelFirstName.setForeground(colourFont);
-    labelLastName.setForeground(colourFont);
-    labelBirthDate.setForeground(colourFont);
-    labelPosition.setForeground(colourFont);
-    labelSkillLevel.setForeground(colourFont);
-
-    // Create text fields for first and last names.
-    textFieldFirstName = new JTextField(12);
-    textFieldLastName = new JTextField(12);
-    textFieldFirstName.setHorizontalAlignment(SwingConstants.RIGHT);
-    textFieldLastName.setHorizontalAlignment(SwingConstants.RIGHT);
-
-    // Create formatted text field ranging from 80 years ago to current date.
-    textFieldBirthDate = new JFormattedTextField(new SimpleDateFormat("yyyy-MM-dd"));
-    textFieldBirthDate.setColumns(12);
-    textFieldBirthDate.setHorizontalAlignment(SwingConstants.RIGHT);
-
-    // Create a combo box for preferred position.
-    Position[] positions = Position.values();
-    comboBoxPosition = new JComboBox<>(positions);
-
-    // Create combo box for skill levels (1 to 5).
-    comboBoxSkillLevel = new JComboBox<>(skillLevels);
-
-    // Create buttons.
-    buttonAddPlayer = new JButton("Add Player");
-    buttonAddPlayer.setBackground(colourButtonBG);
-    buttonAddPlayer.setForeground(colourButtonFont);
-    buttonAddPlayer.setBorder(BorderFactory.createRaisedBevelBorder());
-    buttonAddPlayer.setFont(buttonFont);
-    buttonCreateTeam = new JButton("Create Team");
-    buttonCreateTeam.setBackground(colourButtonBG);
-    buttonCreateTeam.setForeground(colourButtonFont);
-    buttonCreateTeam.setBorder(BorderFactory.createRaisedBevelBorder());
-    buttonCreateTeam.setFont(buttonFont);
-    buttonUseSample = new JButton("Register List of Sample Players");
-    buttonUseSample.setBackground(colourButtonBG);
-    buttonUseSample.setForeground(colourButtonFont);
-    buttonUseSample.setBorder(BorderFactory.createRaisedBevelBorder());
-    buttonUseSample.setFont(buttonFont);
-    buttonReset = new JButton("Reset All");
-    buttonReset.setBackground(colourButtonBG);
-    buttonReset.setForeground(colourButtonFont);
-    buttonReset.setBorder(BorderFactory.createRaisedBevelBorder());
-    buttonReset.setFont(buttonFont);
-
-    buttonAddPlayer.setActionCommand("Add Player");
-    buttonCreateTeam.setActionCommand("Create Team");
-    buttonUseSample.setActionCommand("Register List of Sample Players");
-    buttonReset.setActionCommand("Reset All");
-
-    // Create a label to display messages to user.
-    messageToUser = new JLabel("");
-    displayMessage("Please add a player.", colourFont);
-
-    // Populate Left Panel.
-    resetAllFields();
-    panelFirstName.add(labelFirstName, BorderLayout.WEST);
-    panelFirstName.add(textFieldFirstName, BorderLayout.EAST);
-    panelLastName.add(labelLastName, BorderLayout.WEST);
-    panelLastName.add(textFieldLastName, BorderLayout.EAST);
-    panelBirthDate.add(labelBirthDate, BorderLayout.WEST);
-    panelBirthDate.add(textFieldBirthDate, BorderLayout.EAST);
-    panelSkillLevel.add(labelSkillLevel, BorderLayout.WEST);
-    panelSkillLevel.add(comboBoxSkillLevel, BorderLayout.EAST);
-    panelPosition.add(labelPosition, BorderLayout.WEST);
-    panelPosition.add(comboBoxPosition, BorderLayout.EAST);
-    paneLeftInput.add(panelFirstName);
-    paneLeftInput.add(panelLastName);
-    paneLeftInput.add(panelBirthDate);
-    paneLeftInput.add(panelPosition);
-    paneLeftInput.add(panelSkillLevel);
-    paneLeftInput.add(messageToUser);
-    paneLeftInput.add(buttonAddPlayer);
-    paneLeftInput.add(buttonCreateTeam);
-    paneLeftInput.add(buttonUseSample);
-    paneLeftInput.add(buttonReset);
-
-    // Customize Right Panel (Tab #1, 2, 3).
-    // Remove the white line under a tab button
-    Insets insets = UIManager.getInsets("TabbedPane.contentBorderInsets");
-    insets.top = 0;
-    insets.bottom = 1;
-    insets.left = 1;
-    insets.right = 1;
-    UIManager.put("TabbedPane.contentBorderInsets", insets);
-
-    paneRightOutput.setPreferredSize(new Dimension(600, 475));
-    JPanel tab1RegisteredPlayers = new JPanel(); // Display all registered players.
-    JPanel tab2TeamPlayers = new JPanel(); // Display the list of team players after team has been created.
-    JPanel tab3StartingLineUp = new JPanel(); // Display the starting line up after team has been created.
-    paneRightOutput.addTab("Registered Players", tab1RegisteredPlayers);
-    paneRightOutput.addTab("Team Players", tab2TeamPlayers);
-    paneRightOutput.addTab("Starting Line Up", tab3StartingLineUp);
-    paneRightOutput.setBackgroundAt(0, colourTabBG);
-    paneRightOutput.setForegroundAt(0, colourTabFont);
-    paneRightOutput.setBackgroundAt(1, colourTabBG);
-    paneRightOutput.setForegroundAt(1, colourTabFont);
-    paneRightOutput.setBackgroundAt(2, colourTabBG);
-    paneRightOutput.setForegroundAt(2, colourTabFont);
-
-    // Customize Tab 1.
-    tab1RegisteredPlayers.setBackground(colourTabBGSelected);
-    EmptyBorder emptyBorderPane1 = new EmptyBorder(10, 10, 10, 10);
-    LineBorder lineBorderPane1 = new LineBorder(colourBorder, 0);
-    tab1RegisteredPlayers.setBorder(
-        BorderFactory.createCompoundBorder(lineBorderPane1, emptyBorderPane1));
-    modelAllPlayers = new DefaultTableModel(TABLE_HEADINGS_ALL, 0);
-    tableAllPlayers = new JTable(modelAllPlayers);
-    tableAllPlayers.setAutoCreateRowSorter(true);
-    tableAllPlayers.getColumnModel().getColumn(0).setPreferredWidth(20); // Index
-    tableAllPlayers.getColumnModel().getColumn(1).setPreferredWidth(100); // Last Name
-    tableAllPlayers.getColumnModel().getColumn(2).setPreferredWidth(100); // First Name
-    tableAllPlayers.getColumnModel().getColumn(3).setPreferredWidth(100); // Position
-    tableAllPlayers.getColumnModel().getColumn(4).setPreferredWidth(50); // Age
-    tableAllPlayers.getColumnModel().getColumn(5).setPreferredWidth(50); // Skill Level
-    JScrollPane scrollPane1 = new JScrollPane(tableAllPlayers);
-    scrollPane1.setPreferredSize(new Dimension(550, 425));
-    tab1RegisteredPlayers.add(scrollPane1);
-
-    // Customize Tab 2.
-    tab2TeamPlayers.setBackground(colourTabBGSelected);
-    EmptyBorder emptyBorderPane2 = new EmptyBorder(10, 10, 10, 10);
-    LineBorder lineBorderPane2 = new LineBorder(colourBorder, 0);
-    tab2TeamPlayers.setBorder(
-        BorderFactory.createCompoundBorder(lineBorderPane2, emptyBorderPane2));
-    modelTeamPlayers = new DefaultTableModel(TABLE_HEADINGS_TEAM, 0);
-    tableTeamPlayers = new JTable(modelTeamPlayers);
-    tableTeamPlayers.setAutoCreateRowSorter(true);
-    tableTeamPlayers.getColumnModel().getColumn(0).setPreferredWidth(20); // Jersey
-    tableTeamPlayers.getColumnModel().getColumn(1).setPreferredWidth(100); // Last Name
-    tableTeamPlayers.getColumnModel().getColumn(2).setPreferredWidth(100); // First Name
-    tableTeamPlayers.getColumnModel().getColumn(3).setPreferredWidth(100); // Position
-    tableTeamPlayers.getColumnModel().getColumn(4).setPreferredWidth(50); // Age
-    tableTeamPlayers.getColumnModel().getColumn(5).setPreferredWidth(50); // Skill Level
-    JScrollPane scrollPane2 = new JScrollPane(tableTeamPlayers);
-    scrollPane2.setPreferredSize(new Dimension(550, 425));
-    tab2TeamPlayers.add(scrollPane2);
-
-    // Customize Tab 3.
-    tab3StartingLineUp.setBackground(colourTabBGSelected);
-    EmptyBorder emptyBorderPane3 = new EmptyBorder(10, 10, 10, 10);
-    LineBorder lineBorderPane3 = new LineBorder(colourBorder, 0);
-    tab3StartingLineUp.setBorder(
-        BorderFactory.createCompoundBorder(lineBorderPane3, emptyBorderPane3));
-    modelStartingLineUp = new DefaultTableModel(TABLE_HEADINGS_LINE_UP, 0);
-    tableStartingLineUp = new JTable(modelStartingLineUp);
-    tableStartingLineUp.setAutoCreateRowSorter(true);
-    tableStartingLineUp.getColumnModel().getColumn(0).setPreferredWidth(20); // Jersey
-    tableStartingLineUp.getColumnModel().getColumn(1).setPreferredWidth(100); // Last Name
-    tableStartingLineUp.getColumnModel().getColumn(2).setPreferredWidth(100); // First Name
-    tableStartingLineUp.getColumnModel().getColumn(3).setPreferredWidth(100); // Position
-    tableStartingLineUp.getColumnModel().getColumn(4).setPreferredWidth(50); // Age
-    tableStartingLineUp.getColumnModel().getColumn(5).setPreferredWidth(50); // Skill Level
-    JScrollPane scrollPane3 = new JScrollPane(tableStartingLineUp);
-    scrollPane3.setPreferredSize(new Dimension(550, 425));
-    tab3StartingLineUp.add(scrollPane3);
-
-    // Change colour of tab when selected by creating a custom UI for the JTabbedPane
-    TabbedPaneUI customUI = new BasicTabbedPaneUI() {
-      @Override
-      protected void paintTabBackground(Graphics g, int tabPlacement, int tabIndex, int x, int y,
-          int width, int height, boolean isSelected) {
-        // Call the parent method to draw the default background
-        super.paintTabBackground(g, tabPlacement, tabIndex, x, y, width, height, isSelected);
-
-        // Change the color of the selected tab when it is selected
-        if (isSelected) {
-          g.setColor(colourTabBGSelected);
-          g.fillRect(x, y, width, height);
-        }
-      }
-    };
-    paneRightOutput.setUI(customUI);
+    setDarkMode(); // Default colour scheme.
+    createComponents();
+    constructApplication();
+    configureApplication();
 
     // Pack the whole application.
-    add(paneLeftInput);
-    add(paneRightOutput);
     pack();
     setVisible(true);
   }
@@ -355,7 +136,7 @@ public class Application extends JFrame implements ApplicationInterface {
     }
     newUserInput.setSkillLevel(skillLevel);
     this.userInput = newUserInput;
-    displayMessage("Player successfully added.", colourFont);
+    displayMessage("Successfully registered a new player.", colourFont);
   }
 
   @Override
@@ -373,9 +154,12 @@ public class Application extends JFrame implements ApplicationInterface {
     // Add each player in the list as a new row in the table.
     int rowIndex = 1;
     for (Player player : sortedList) {
-      Object[] rowData = { String.format("%02d", rowIndex), player.getLastName(),
-          player.getFirstName(), player.getPreferredPosition(), player.getAge(),
-          player.getSkillLevel() };
+      Object[] rowData = { String.format("%02d", rowIndex),
+                           player.getLastName(),
+                           player.getFirstName(),
+                           player.getPreferredPosition(),
+                           player.getAge(),
+                           player.getSkillLevel() };
       modelAllPlayers.addRow(rowData);
       rowIndex++;
     }
@@ -383,34 +167,12 @@ public class Application extends JFrame implements ApplicationInterface {
 
   @Override
   public void displayTeamPlayer(Map<PlayerIdentifier, Player> teamPlayerList) {
-    displayMessage("Team has been created.", colourFont);
-
-    // Remove all rows in the table.
-    modelTeamPlayers.setRowCount(0);
-
-    // Add each team player in the list as a new row in the table.
-    for (Map.Entry<PlayerIdentifier, Player> entry : teamPlayerList.entrySet()) {
-      Object[] rowData = { String.format("%02d", entry.getKey().getJerseyNumber()),
-          entry.getValue().getLastName(), entry.getValue().getFirstName(),
-          entry.getKey().getAssignedPosition(), entry.getValue().getAge(),
-          entry.getValue().getSkillLevel() };
-      modelTeamPlayers.addRow(rowData);
-    }
+    displayTeamInfo(teamPlayerList, modelTeamPlayers);
   }
 
   @Override
   public void displayStartingLineUp(Map<PlayerIdentifier, Player> startingLineUp) {
-    // Remove all rows in the table.
-    modelStartingLineUp.setRowCount(0);
-
-    // Add each team player in the list as a new row in the table.
-    for (Map.Entry<PlayerIdentifier, Player> entry : startingLineUp.entrySet()) {
-      Object[] rowData = { String.format("%02d", entry.getKey().getJerseyNumber()),
-          entry.getValue().getLastName(), entry.getValue().getFirstName(),
-          entry.getKey().getAssignedPosition(), entry.getValue().getAge(),
-          entry.getValue().getSkillLevel() };
-      modelStartingLineUp.addRow(rowData);
-    }
+    displayTeamInfo(startingLineUp, modelStartingLineUp);
   }
 
   @Override
@@ -440,6 +202,7 @@ public class Application extends JFrame implements ApplicationInterface {
       }
       features.displayTeamPlayer();
       features.displayStartingLineUp();
+      displayMessage("A team has been created.", colourFont);
       paneRightOutput.setSelectedIndex(1);
     });
 
@@ -452,8 +215,14 @@ public class Application extends JFrame implements ApplicationInterface {
     // Action for "Reset ALl" button.
     buttonReset.addActionListener(event -> {
       features.resetAll();
-      paneRightOutput.setSelectedIndex(1);
+      paneRightOutput.setSelectedIndex(0);
     });
+
+    // Action for "Toggle Dark/Light Mode" button.
+    buttonDarkLightMode.addActionListener(event -> toggleDarkLightMode());
+
+    // Action for "Exit" button.
+    buttonExit.addActionListener(event -> features.exitProgram());
   }
 
   @Override
@@ -467,7 +236,7 @@ public class Application extends JFrame implements ApplicationInterface {
     textFieldLastName.setText("");
     textFieldBirthDate.setValue(new Date());
     comboBoxPosition.setSelectedIndex(0);
-    comboBoxSkillLevel.setSelectedIndex(skillLevels.length - 1);
+    comboBoxSkillLevel.setSelectedIndex(SKILL_LEVELS.length - 1);
   }
 
   @Override
@@ -475,7 +244,7 @@ public class Application extends JFrame implements ApplicationInterface {
     modelAllPlayers.setRowCount(0);
     modelTeamPlayers.setRowCount(0);
     modelStartingLineUp.setRowCount(0);
-    displayMessage("Please enter a player.", colourFont);
+    displayMessage("Please register a player.", colourFont);
   }
 
   /**
@@ -491,5 +260,398 @@ public class Application extends JFrame implements ApplicationInterface {
     messageToUser.setText(message);
     messageToUser.setHorizontalAlignment(SwingConstants.CENTER);
     messageToUser.setForeground(fontColour);
+  }
+
+  /**
+   * This method displays team info from a map of {@link PlayerIdentifier} and {@link Player} to a
+   * JTable.
+   *
+   * @param teamMap    Map<{@link PlayerIdentifier}, {@link Player}>, map representing soccer team
+   *                   players.
+   * @param tableModel {@link DefaultTableModel}, the model associated with the JTable.
+   */
+  private void displayTeamInfo(Map<PlayerIdentifier, Player> teamMap,
+      DefaultTableModel tableModel) {
+    // Remove all rows in the table.
+    tableModel.setRowCount(0);
+
+    // Add each team player in the list as a new row in the table.
+    for (Map.Entry<PlayerIdentifier, Player> entry : teamMap.entrySet()) {
+      Object[] rowData = { String.format("%02d", entry.getKey().getJerseyNumber()),
+                           entry.getValue().getLastName(),
+                           entry.getValue().getFirstName(),
+                           entry.getKey().getAssignedPosition(),
+                           entry.getValue().getAge(),
+                           entry.getValue().getSkillLevel() };
+      tableModel.addRow(rowData);
+    }
+  }
+
+  /**
+   * This method sets the default colours and font. The default colour mode is Dark Mode.
+   */
+  private void setDarkMode() {
+    colourBG1 = Color.DARK_GRAY;
+    colourBG2 = Color.DARK_GRAY;
+    colourBorder = Color.ORANGE;
+    colourFont = Color.WHITE;
+    colourTabBGSelected = Color.DARK_GRAY;
+    isDarkMode = true;
+
+    // Does not change between dark and light mode.
+    colourButtonBG1 = Color.ORANGE;
+    colourButtonFont1 = Color.BLACK;
+    colourButtonBG2 = Color.LIGHT_GRAY;
+    colourButtonFont2 = Color.BLACK;
+    colourTabBG = Color.ORANGE;
+    colourTabFont = Color.DARK_GRAY;
+    titleFont = new Font(Font.SANS_SERIF, Font.BOLD, 24);
+    buttonFont1 = new Font(Font.SANS_SERIF, Font.BOLD, 16);
+    buttonFont2 = new Font(Font.SANS_SERIF, Font.BOLD, 12);
+  }
+
+  /**
+   * This method toggles between dark and light mode.
+   */
+  private void toggleDarkLightMode() {
+    if (isDarkMode) {
+      // Convert to Light Mode.
+      colourBG1 = Color.GRAY;
+      colourBG2 = Color.LIGHT_GRAY;
+      colourBorder = Color.BLACK;
+      colourFont = Color.BLACK;
+      colourTabBGSelected = Color.LIGHT_GRAY;
+      isDarkMode = false;
+    } else {
+      // Convert back to Dark Mode.
+      setDarkMode();
+    }
+    configureApplication();
+  }
+
+  /**
+   * This method builds the components of the application frame.
+   */
+  private void createComponents() {
+    userInput = new UserInput(); // Empty user input.
+
+    // Fields and buttons for user interaction.
+    // Container for pane2, pane3, and pane4.
+    paneLeftInput = new JPanel();
+    paneRightOutput = new JTabbedPane();
+
+    // Field to input first name.
+    // Field to input last name.
+    // Field to input birthdate.
+    // Field to select preferred positions.
+    // Field to select skill level.
+    panelFirstName = new JPanel();
+    panelLastName = new JPanel();
+    panelBirthDate = new JPanel();
+    panelPosition = new JPanel();
+    panelSkillLevel = new JPanel();
+    labelFirstName = new JLabel("First Name: ");
+    labelLastName = new JLabel("Last Name: ");
+    labelBirthDate = new JLabel("Birth Date (yyyy-mm-dd): ");
+    labelPosition = new JLabel("Preferred Position: ");
+    labelSkillLevel = new JLabel("Skill Level: ");
+    textFieldFirstName = new JTextField();
+    textFieldLastName = new JTextField();
+    textFieldBirthDate = new JFormattedTextField(new SimpleDateFormat("yyyy-MM-dd"));
+    Position[] positions = Position.values();
+    comboBoxPosition = new JComboBox<>(positions);
+    comboBoxSkillLevel = new JComboBox<>(SKILL_LEVELS);
+
+    // Button to register new player.
+    // Button to create a team.
+    // Button to register a list of sample players.
+    // Button to reset all.
+    // Button to configure between dark and light mode.
+    // Button to exit application.
+    buttonAddPlayer = new JButton("Register Player");
+    buttonCreateTeam = new JButton("Create Team");
+    buttonUseSample = new JButton("Use Sample Players");
+    buttonReset = new JButton("Reset All");
+    buttonDarkLightMode = new JButton("Toggle Dark/Light Mode");
+    buttonExit = new JButton("Exit");
+    containerButtonGroup1 = new JPanel();
+    containerButtonGroup2 = new JPanel();
+
+    // Message label to user.
+    messageToUser = new JLabel("");
+
+    // Set fields to default.
+    resetAllFields();
+
+    // Right pane for display.
+    // Table for all registered players.
+    // Table for all team players.
+    // Table for starting line up.
+    modelAllPlayers = new DefaultTableModel(TABLE_HEADINGS_ALL, 0);
+    modelTeamPlayers = new DefaultTableModel(TABLE_HEADINGS_TEAM, 0);
+    modelStartingLineUp = new DefaultTableModel(TABLE_HEADINGS_TEAM, 0);
+    tab1RegisteredPlayers = new JPanel();
+    tab2TeamPlayers = new JPanel();
+    tab3StartingLineUp = new JPanel();
+    tableAllPlayers = new JTable(modelAllPlayers);
+    tableTeamPlayers = new JTable(modelTeamPlayers);
+    tableStartingLineUp = new JTable(modelStartingLineUp);
+    scrollPane1 = new JScrollPane(tableAllPlayers);
+    scrollPane2 = new JScrollPane(tableTeamPlayers);
+    scrollPane3 = new JScrollPane(tableStartingLineUp);
+  }
+
+  /**
+   * This method constructs the main application frame.
+   */
+  private void constructApplication() {
+
+    panelFirstName.setLayout(new BorderLayout(5, 5));
+    panelLastName.setLayout(new BorderLayout(5, 5));
+    panelBirthDate.setLayout(new BorderLayout(5, 5));
+    panelSkillLevel.setLayout(new BorderLayout(5, 5));
+    panelPosition.setLayout(new BorderLayout(5, 5));
+
+    // Construct left pane.
+    panelFirstName.add(labelFirstName, BorderLayout.WEST);
+    panelFirstName.add(textFieldFirstName, BorderLayout.EAST);
+    panelLastName.add(labelLastName, BorderLayout.WEST);
+    panelLastName.add(textFieldLastName, BorderLayout.EAST);
+    panelBirthDate.add(labelBirthDate, BorderLayout.WEST);
+    panelBirthDate.add(textFieldBirthDate, BorderLayout.EAST);
+    panelSkillLevel.add(labelSkillLevel, BorderLayout.WEST);
+    panelSkillLevel.add(comboBoxSkillLevel, BorderLayout.EAST);
+    panelPosition.add(labelPosition, BorderLayout.WEST);
+    panelPosition.add(comboBoxPosition, BorderLayout.EAST);
+    paneLeftInput.add(panelFirstName);
+    paneLeftInput.add(panelLastName);
+    paneLeftInput.add(panelBirthDate);
+    paneLeftInput.add(panelPosition);
+    paneLeftInput.add(panelSkillLevel);
+    paneLeftInput.add(messageToUser);
+    paneLeftInput.add(buttonAddPlayer);
+    paneLeftInput.add(buttonCreateTeam);
+    containerButtonGroup1.add(buttonUseSample);
+    containerButtonGroup1.add(buttonReset);
+    paneLeftInput.add(containerButtonGroup1);
+    containerButtonGroup2.add(buttonDarkLightMode);
+    containerButtonGroup2.add(buttonExit);
+    paneLeftInput.add(containerButtonGroup2);
+
+    // Construct right pane.
+    paneRightOutput.addTab("Registered Players", tab1RegisteredPlayers);
+    paneRightOutput.addTab("Team Players", tab2TeamPlayers);
+    paneRightOutput.addTab("Starting Line Up", tab3StartingLineUp);
+
+    // Construct application by combing left and right panes.
+    add(paneLeftInput);
+    add(paneRightOutput);
+  }
+
+  /**
+   * This method sets up the main application frame.
+   */
+  private void configureApplication() {
+    setTitle("Soccer Team Application");
+    setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    setLayout(new FlowLayout(FlowLayout.CENTER, 10, 10));
+    setLocation(200, 200);
+    setResizable(false);
+    getContentPane().setBackground(colourBG1);
+
+    // Customize Left Pane.
+    paneLeftInput.setPreferredSize(new Dimension(380, 480));
+    paneLeftInput.setBackground(colourBG1);
+    EmptyBorder emptyBorderPaneLeft = new EmptyBorder(10, 10, 10, 10);
+    TitledBorder titledBorderpaneLeft = new TitledBorder("Player Registration");
+    titledBorderpaneLeft.setTitleFont(titleFont);
+    titledBorderpaneLeft.setTitleColor(colourFont);
+    titledBorderpaneLeft.setBorder(new LineBorder(colourFont, 2));
+    paneLeftInput.setBorder(BorderFactory.createCompoundBorder(titledBorderpaneLeft,
+                                                               emptyBorderPaneLeft));
+    paneLeftInput.setLayout(new GridLayout(10, 1, 10, 10));
+
+    // Customize sub-panels for Left Pane.
+    configureFieldPanel(panelFirstName);
+    configureFieldPanel(panelLastName);
+    configureFieldPanel(panelBirthDate);
+    configureFieldPanel(panelPosition);
+    configureFieldPanel(panelSkillLevel);
+
+    // Customize labels for each field.
+
+    labelFirstName.setForeground(colourFont);
+    labelLastName.setForeground(colourFont);
+    labelBirthDate.setForeground(colourFont);
+    labelPosition.setForeground(colourFont);
+    labelSkillLevel.setForeground(colourFont);
+
+    // Customize text fields for first and last names.
+    configureTextField(textFieldFirstName);
+    configureTextField(textFieldLastName);
+
+    // Customize formatted text field ranging from 80 years ago to current date.
+    configureTextField(textFieldBirthDate);
+
+    // Customize buttons.
+    configureButton1(buttonAddPlayer);
+    configureButton1(buttonCreateTeam);
+    configureButton2(buttonUseSample);
+    configureButton2(buttonReset);
+    configureButton2(buttonDarkLightMode);
+    configureButton2(buttonExit);
+
+    // Customize a label to display messages to user.
+    displayMessage("Please register a player.", colourFont);
+
+    // Customize sub-panes for lesser buttons.
+    containerButtonGroup1.setLayout(new GridLayout(1, 2, 5, 5));
+    containerButtonGroup1.setBackground(colourBG1);
+
+    containerButtonGroup2.setLayout(new GridLayout(1, 2, 5, 5));
+    containerButtonGroup2.setBackground(colourBG1);
+
+    // Customize Right Panel (Tab #1, 2, 3).
+    paneRightOutput.setPreferredSize(new Dimension(600, 480));
+    paneRightOutput.setFont(buttonFont1);
+
+    // Remove the white line under a tab button
+    Insets insets = UIManager.getInsets("TabbedPane.contentBorderInsets");
+    insets.top = 0;
+    insets.bottom = 0;
+    insets.left = 0;
+    insets.right = 0;
+    UIManager.put("TabbedPane.contentBorderInsets", insets);
+
+    // Customize Tab 1.
+    configureTabPanel(tab1RegisteredPlayers);
+    configureTable(tableAllPlayers);
+    configureScrollPane(scrollPane1);
+    tab1RegisteredPlayers.add(scrollPane1);
+
+    // Customize Tab 2.
+    configureTabPanel(tab2TeamPlayers);
+    configureTable(tableTeamPlayers);
+    configureScrollPane(scrollPane2);
+    tab2TeamPlayers.add(scrollPane2);
+
+    // Customize Tab 3.
+    configureTabPanel(tab3StartingLineUp);
+    configureTable(tableStartingLineUp);
+    configureScrollPane(scrollPane3);
+    tab3StartingLineUp.add(scrollPane3);
+
+    // Set the background color of the JViewport that contains the JTable
+    JViewport viewport1 = (JViewport) tableAllPlayers.getParent();
+    viewport1.setBackground(colourTabBGSelected);
+    JViewport viewport2 = (JViewport) tableTeamPlayers.getParent();
+    viewport2.setBackground(colourTabBGSelected);
+    JViewport viewport3 = (JViewport) tableStartingLineUp.getParent();
+    viewport3.setBackground(colourTabBGSelected);
+
+    // Set tab colours.
+    paneRightOutput.setBackgroundAt(0, colourTabBG);
+    paneRightOutput.setForegroundAt(0, colourTabFont);
+    paneRightOutput.setBackgroundAt(1, colourTabBG);
+    paneRightOutput.setForegroundAt(1, colourTabFont);
+    paneRightOutput.setBackgroundAt(2, colourTabBG);
+    paneRightOutput.setForegroundAt(2, colourTabFont);
+  }
+
+
+
+  /**
+   * This method configures a JPanel using consistent formatting.
+   *
+   * @param fieldPanel {@link JPanel}, field panel to configure.
+   */
+  private void configureFieldPanel(JPanel fieldPanel) {
+    EmptyBorder emptyBorderSubPanel = new EmptyBorder(5, 5, 5, 5);
+    LineBorder lineBorderSubPanel = new LineBorder(colourBorder, 1);
+    fieldPanel.setBorder(BorderFactory.createCompoundBorder(lineBorderSubPanel,
+                                                            emptyBorderSubPanel));
+    fieldPanel.setBackground(colourBG2);
+  }
+
+  /**
+   * This method configures a JTextField using consistent formatting.
+   *
+   * @param textField {@link JTextField}, text field to configure.
+   */
+  private void configureTextField(JTextField textField) {
+    textField.setColumns(12);
+    textField.setHorizontalAlignment(SwingConstants.RIGHT);
+  }
+
+  /**
+   * This method configures the major JButton using consistent formatting.
+   *
+   * @param button {@link JButton}, button to configure.
+   */
+  private void configureButton1(JButton button) {
+    button.setActionCommand(button.getText());
+    button.setBackground(colourButtonBG1);
+    button.setForeground(colourButtonFont1);
+    button.setBorder(BorderFactory.createRaisedBevelBorder());
+    button.setFont(buttonFont1);
+  }
+
+  /**
+   * This method configures the minor JButton using consistent formatting.
+   *
+   * @param button {@link JButton}, button to configure.
+   */
+  private void configureButton2(JButton button) {
+    button.setActionCommand(button.getText());
+    button.setBackground(colourButtonBG2);
+    button.setForeground(colourButtonFont2);
+    button.setBorder(BorderFactory.createRaisedBevelBorder());
+    button.setFont(buttonFont2);
+  }
+
+  /**
+   * This method configures a JTable using consistent formatting.
+   *
+   * @param table {@link JTable}, table to configure.
+   */
+  private void configureTable(JTable table) {
+    table.getColumnModel().getColumn(0).setPreferredWidth(50); // Jersey
+    table.getColumnModel().getColumn(1).setPreferredWidth(100); // Last Name
+    table.getColumnModel().getColumn(2).setPreferredWidth(100); // First Name
+    table.getColumnModel().getColumn(3).setPreferredWidth(100); // Position
+    table.getColumnModel().getColumn(4).setPreferredWidth(50); // Age
+    table.getColumnModel().getColumn(5).setPreferredWidth(50); // Skill Level
+    table.setBorder(new LineBorder(colourBorder, 0));
+    table.setGridColor(colourButtonFont1);
+    table.setSelectionForeground(colourButtonFont1);
+    table.setSelectionBackground(colourButtonBG1);
+    table.setForeground(colourFont);
+    table.setBackground(colourTabBGSelected);
+    table.setFont(buttonFont2);
+    table.setShowVerticalLines(false);
+    table.setAutoCreateRowSorter(true);
+  }
+
+  /**
+   * This method configures a JScrollPane using consistent formatting.
+   *
+   * @param scrollPane {@link JScrollPane}, scroll pane to configure.
+   */
+  private void configureScrollPane(JScrollPane scrollPane) {
+    scrollPane.setPreferredSize(new Dimension(550, 425));
+    scrollPane.setBackground(colourBG1);
+    scrollPane.setBorder(BorderFactory.createEmptyBorder());
+  }
+
+  /**
+   * This method configures a JScrollPane using consistent formatting.
+   *
+   * @param tabPanel {@link JPanel}, scroll pane to configure.
+   */
+  private void configureTabPanel(JPanel tabPanel) {
+    tabPanel.setBackground(colourTabBGSelected);
+    EmptyBorder emptyBorderPane1 = new EmptyBorder(10, 10, 10, 10);
+    LineBorder lineBorderPane1 = new LineBorder(colourBorder, 0);
+    tabPanel.setBorder(BorderFactory.createCompoundBorder(lineBorderPane1, emptyBorderPane1));
   }
 }

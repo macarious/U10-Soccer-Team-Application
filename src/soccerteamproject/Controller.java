@@ -38,7 +38,7 @@ public class Controller implements ControllerInterface {
       throws MissingInfoException, DateTimeParseException, IllegalArgumentException,
              DuplicatePlayerException {
     if (!view.isNameInputComplete()) {
-      throw new MissingInfoException("The name fields must be filled in order to add a player.");
+      throw new MissingInfoException("The name fields must be completed to register a player.");
     }
 
     view.addPlayer(); // May throw DateTimeParseException.
