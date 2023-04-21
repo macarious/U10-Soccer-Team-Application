@@ -67,6 +67,15 @@ public class Player implements Comparable<Player> {
   }
 
   /**
+   * This method gets the birthdate of the player.
+   *
+   * @return LocalDate, birthdate of player.
+   */
+  public LocalDate getBirthdate() {
+    return this.birthdate;
+  }
+
+  /**
    * This method gets the age of the player.
    *
    * @return int, age of player.
@@ -110,11 +119,8 @@ public class Player implements Comparable<Player> {
 
   @Override
   public int hashCode() {
-    return Objects.hash(this.firstName,
-                        this.lastName,
-                        this.birthdate,
-                        this.preferredPosition,
-                        this.skillLevel);
+    return Objects.hash(this.firstName, this.lastName, this.birthdate, this.preferredPosition,
+        this.skillLevel);
   }
 
   @Override
@@ -126,9 +132,8 @@ public class Player implements Comparable<Player> {
       return false;
     }
     Player otherPlayer = (Player) other;
-    return this.firstName.equals(otherPlayer.firstName)
-        && this.lastName.equals(otherPlayer.lastName)
-        && this.birthdate.equals(otherPlayer.birthdate)
+    return this.firstName.equals(otherPlayer.firstName) && this.lastName.equals(
+        otherPlayer.lastName) && this.birthdate.equals(otherPlayer.birthdate)
         && this.preferredPosition == otherPlayer.preferredPosition
         && this.skillLevel == otherPlayer.skillLevel;
   }
@@ -144,6 +149,14 @@ public class Player implements Comparable<Player> {
 
     if (result == 0) {
       result = this.birthdate.compareTo(other.birthdate);
+    }
+
+    if (result == 0) {
+      result = this.preferredPosition.compareTo(other.preferredPosition);
+    }
+
+    if (result == 0) {
+      result = Integer.compare(this.skillLevel, other.skillLevel);
     }
 
     return result;

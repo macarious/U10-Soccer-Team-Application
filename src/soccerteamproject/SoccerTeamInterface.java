@@ -20,10 +20,12 @@ public interface SoccerTeamInterface {
    * @param preferredPosition Position, preferred position of player.
    * @param skillLevel        int, skill level from 1 to 5 of player.
    * @throws IllegalArgumentException if player's age is less than 0 or greater than 10.
-   * @throws IllegalArgumentException if skill leve is not between 1 and 5 (inclusive).
+   * @throws IllegalArgumentException if skill level is not between 1 and 5 (inclusive).
+   * @throws DuplicatePlayerException if a player of the same name and birthdate already exists.
    */
   void registerPlayer(String firstName, String lastName, LocalDate birthdate,
-      Position preferredPosition, int skillLevel) throws IllegalArgumentException;
+      Position preferredPosition, int skillLevel)
+      throws IllegalArgumentException, DuplicatePlayerException;
 
   /**
    * This method assigns the positions of all the players on the soccer team, and it also determined

@@ -36,18 +36,21 @@ public class Controller implements ControllerInterface {
   @Override
   public void addNewPlayer()
       throws MissingInfoException, DateTimeParseException, IllegalArgumentException,
-             DuplicatePlayerException {
+      DuplicatePlayerException {
     if (!view.isNameInputComplete()) {
       throw new MissingInfoException("The name fields must be completed to register a player.");
     }
 
-    view.addPlayer(); // May throw DateTimeParseException.
+    // May throw DateTimeParseException.
+    view.addPlayer();
     UserInput userInput = view.getUserInput();
+
+    // May throw IllegalArgumentException or DuplicatePlayerException.
     model.registerPlayer(userInput.getFirstName(),
                          userInput.getLastName(),
                          userInput.getBirthDate(),
                          userInput.getPreferredPosition(),
-                         userInput.getSkillLevel()); // May throw IllegalArgumentException
+                         userInput.getSkillLevel());
     view.resetAllFields();
   }
 

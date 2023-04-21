@@ -181,7 +181,7 @@ public class Application extends JFrame implements ApplicationInterface {
     buttonAddPlayer.addActionListener(event -> {
       try {
         features.addNewPlayer();
-      } catch (MissingInfoException | IllegalArgumentException e) {
+      } catch (MissingInfoException | IllegalArgumentException | DuplicatePlayerException e) {
         displayMessage(e.getMessage(), colourError);
         return;
       } catch (DateTimeParseException e) {
@@ -476,8 +476,8 @@ public class Application extends JFrame implements ApplicationInterface {
     titledBorderpaneLeft.setTitleFont(titleFont);
     titledBorderpaneLeft.setTitleColor(colourFont);
     titledBorderpaneLeft.setBorder(new LineBorder(colourFont, 2));
-    paneLeftInput.setBorder(BorderFactory.createCompoundBorder(titledBorderpaneLeft,
-                                                               emptyBorderPaneLeft));
+    paneLeftInput.setBorder(
+        BorderFactory.createCompoundBorder(titledBorderpaneLeft, emptyBorderPaneLeft));
 
     // Customize sub-panels for Left Pane.
     configureFieldPanel(panelFirstName);
@@ -576,8 +576,8 @@ public class Application extends JFrame implements ApplicationInterface {
   private void configureFieldPanel(JPanel fieldPanel) {
     EmptyBorder emptyBorderSubPanel = new EmptyBorder(5, 5, 5, 5);
     LineBorder lineBorderSubPanel = new LineBorder(colourBorder, 1);
-    fieldPanel.setBorder(BorderFactory.createCompoundBorder(lineBorderSubPanel,
-                                                            emptyBorderSubPanel));
+    fieldPanel.setBorder(
+        BorderFactory.createCompoundBorder(lineBorderSubPanel, emptyBorderSubPanel));
     fieldPanel.setBackground(colourBG2);
   }
 

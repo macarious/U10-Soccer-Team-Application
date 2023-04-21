@@ -42,12 +42,12 @@ public class SoccerTeam implements SoccerTeamInterface {
    * @param randomGenerator Random, random generator to be used for the team creation.
    */
   public SoccerTeam(Random randomGenerator) {
-    this.allPlayerList = new TreeSet<>(Comparator
-                                           .comparingInt(Player::getSkillLevel)
-                                           .reversed()
-                                           .thenComparing(Player::getLastName)
-                                           .thenComparing(Player::getFirstName)
-                                           .thenComparing(Player::getAge));
+    this.allPlayerList = new TreeSet<>(Comparator.comparingInt(Player::getSkillLevel)
+                                                 .reversed()
+                                                 .thenComparing(Player::getLastName)
+                                                 .thenComparing(Player::getFirstName)
+                                                 .thenComparing(Player::getBirthdate)
+                                                 .thenComparing(Player::getPreferredPosition));
     this.teamPlayerList = new LinkedHashMap<>();
     this.positionAssignmentCount = new TreeMap<>();
     this.populatePositionAssignmentCount();
@@ -56,9 +56,13 @@ public class SoccerTeam implements SoccerTeamInterface {
 
   @Override
   public void registerPlayer(String firstName, String lastName, LocalDate birthdate,
-      Position preferredPosition, int skillLevel) throws IllegalArgumentException {
+      Position preferredPosition, int skillLevel)
+      throws IllegalArgumentException, DuplicatePlayerException {
     // IllegalArgumentException may be thrown when instantiating Player.
     Player newPlayer = new Player(firstName, lastName, birthdate, preferredPosition, skillLevel);
+    if (this.allPlayerList.contains(newPlayer)) {
+      throw new DuplicatePlayerException("This player has already been registered.");
+    }
     this.allPlayerList.add(newPlayer);
   }
 
@@ -89,14 +93,17 @@ public class SoccerTeam implements SoccerTeamInterface {
 
   @Override
   public Map<PlayerIdentifier, Player> getStartingLineUp() {
-    Map<PlayerIdentifier, Player> startingLineUp = this.teamPlayerList
-        .entrySet()
-        .stream()
-        .filter(entry -> entry.getKey().getAssignedPosition() != null)
-        .collect(Collectors.toMap(Map.Entry::getKey,
-                                  Map.Entry::getValue,
-                                  (value1, value2) -> value2,
-                                  LinkedHashMap::new));
+    Map<PlayerIdentifier, Player> startingLineUp = this.teamPlayerList.entrySet()
+                                                                      .stream()
+                                                                      .filter(entry ->
+                                                                          entry.getKey()
+                                                                               .getAssignedPosition()
+                                                                              != null)
+                                                                      .collect(Collectors.toMap(
+                                                                          Map.Entry::getKey,
+                                                                          Map.Entry::getValue,
+                                                                          (value1, value2) -> value2,
+                                                                          LinkedHashMap::new));
     return sortMapByPosition(startingLineUp);
   }
 
@@ -179,14 +186,11 @@ public class SoccerTeam implements SoccerTeamInterface {
    * @return {@link Map} of {@link PlayerIdentifier}, {@link Player}, a list of sorted players.
    */
   private Map<PlayerIdentifier, Player> sortMapByPlayer(Map<PlayerIdentifier, Player> map) {
-    return map
-        .entrySet()
-        .stream()
-        .sorted(Entry.comparingByValue())
-        .collect(Collectors.toMap(Map.Entry::getKey,
-                                  Map.Entry::getValue,
-                                  (value1, value2) -> value2,
-                                  LinkedHashMap::new));
+    return map.entrySet()
+              .stream()
+              .sorted(Entry.comparingByValue())
+              .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue,
+                  (value1, value2) -> value2, LinkedHashMap::new));
   }
 
   /**
@@ -197,21 +201,13 @@ public class SoccerTeam implements SoccerTeamInterface {
    * @return {@link Map} of {@link PlayerIdentifier}, {@link Player}, a list of sorted players.
    */
   private Map<PlayerIdentifier, Player> sortMapByPosition(Map<PlayerIdentifier, Player> map) {
-    return map
-        .entrySet()
-        .stream()
-        .sorted(Entry
-                    .<PlayerIdentifier, Player>comparingByKey()
-                    .thenComparing(entry -> entry
-                        .getValue()
-                        .getLastName())
-                    .thenComparing(entry -> entry
-                        .getValue()
-                        .getFirstName()))
-        .collect(Collectors.toMap(Map.Entry::getKey,
-                                  Map.Entry::getValue,
-                                  (value1, value2) -> value2,
-                                  LinkedHashMap::new));
+    return map.entrySet()
+              .stream()
+              .sorted(Entry.<PlayerIdentifier, Player>comparingByKey()
+                           .thenComparing(entry -> entry.getValue().getLastName())
+                           .thenComparing(entry -> entry.getValue().getFirstName()))
+              .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue,
+                  (value1, value2) -> value2, LinkedHashMap::new));
   }
 
   /**
@@ -280,20 +276,17 @@ public class SoccerTeam implements SoccerTeamInterface {
     // Repeat assignment until desired number of players have been assigned, or when there are no
     // more players with the preferred positions to assign to.
     for (int i = 0; i < quantity; i++) {
-      this.teamPlayerList
-          .entrySet()
-          .stream()
-          .filter(entry -> entry.getKey().getAssignedPosition() == null)
-          .filter(entry -> entry.getValue().getSkillLevel() == skillLevel)
-          .filter(entry -> entry
-              .getValue()
-              .getPreferredPosition() == position)
-          .findAny()
-          .ifPresent(entry -> {
-            entry.getKey().setAssignedPosition(position);
-            int positionCount = this.positionAssignmentCount.get(position);
-            this.positionAssignmentCount.put(position, positionCount - 1);
-          });
+      this.teamPlayerList.entrySet()
+                         .stream()
+                         .filter(entry -> entry.getKey().getAssignedPosition() == null)
+                         .filter(entry -> entry.getValue().getSkillLevel() == skillLevel)
+                         .filter(entry -> entry.getValue().getPreferredPosition() == position)
+                         .findAny()
+                         .ifPresent(entry -> {
+                           entry.getKey().setAssignedPosition(position);
+                           int positionCount = this.positionAssignmentCount.get(position);
+                           this.positionAssignmentCount.put(position, positionCount - 1);
+                         });
     }
   }
 
@@ -306,17 +299,16 @@ public class SoccerTeam implements SoccerTeamInterface {
    */
   private void assignPositionRemained(Position position, int quantity, int skillLevel) {
     for (int i = 0; i < quantity; i++) {
-      this.teamPlayerList
-          .entrySet()
-          .stream()
-          .filter(entry -> entry.getKey().getAssignedPosition() == null)
-          .filter(entry -> entry.getValue().getSkillLevel() == skillLevel)
-          .findAny()
-          .ifPresent(entry -> {
-            entry.getKey().setAssignedPosition(position);
-            int positionCount = this.positionAssignmentCount.get(position);
-            this.positionAssignmentCount.put(position, positionCount - 1);
-          });
+      this.teamPlayerList.entrySet()
+                         .stream()
+                         .filter(entry -> entry.getKey().getAssignedPosition() == null)
+                         .filter(entry -> entry.getValue().getSkillLevel() == skillLevel)
+                         .findAny()
+                         .ifPresent(entry -> {
+                           entry.getKey().setAssignedPosition(position);
+                           int positionCount = this.positionAssignmentCount.get(position);
+                           this.positionAssignmentCount.put(position, positionCount - 1);
+                         });
     }
   }
 
@@ -328,8 +320,9 @@ public class SoccerTeam implements SoccerTeamInterface {
    * @return String, lists out the keys and values.
    */
   private String convertMapToString(Map<PlayerIdentifier, Player> map) {
-    return map.entrySet().stream().map(entry -> entry.getKey() + " -- " + entry
-        .getValue()
-        .nameToString()).collect(Collectors.joining("\n"));
+    return map.entrySet()
+              .stream()
+              .map(entry -> entry.getKey() + " -- " + entry.getValue().nameToString())
+              .collect(Collectors.joining("\n"));
   }
 }
