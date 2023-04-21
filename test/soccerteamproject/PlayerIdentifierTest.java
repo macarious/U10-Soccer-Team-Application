@@ -46,7 +46,6 @@ public class PlayerIdentifierTest {
     assertEquals(15, player4.getJerseyNumber());
   }
 
-
   /**
    * This test tests the getAssignedPosition and setAssignedPosition methods.
    */
@@ -88,7 +87,6 @@ public class PlayerIdentifierTest {
 
     PlayerIdentifier playerDuplicate = new PlayerIdentifier(10);
     playerDuplicate.setAssignedPosition(Position.DEFENDER);
-
 
     assertEquals(player1.hashCode(), player1.hashCode());
     assertEquals(player1.hashCode(), playerDuplicate.hashCode());
@@ -151,8 +149,7 @@ public class PlayerIdentifierTest {
   }
 
   /**
-   * This test tests the compareTo method.
-   * GOALIE < DEFENDER < MIDFIELDER < FORWARD < null.
+   * This test tests the compareTo method. GOALIE < DEFENDER < MIDFIELDER < FORWARD < null.
    */
   @Test
   public void testCompareTo() {

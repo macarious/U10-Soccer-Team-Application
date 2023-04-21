@@ -1,6 +1,5 @@
 package soccerteamproject;
 
-import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
@@ -413,28 +412,38 @@ public class Application extends JFrame implements ApplicationInterface {
     // Define layout of components.
     setLocation(200, 200);
     setResizable(false);
-
     setLayout(new FlowLayout(FlowLayout.CENTER, 10, 10));
-    paneLeftInput.setLayout(new GridLayout(10, 1, 10, 10));
-    panelFirstName.setLayout(new BorderLayout(5, 5));
-    panelLastName.setLayout(new BorderLayout(5, 5));
-    panelBirthDate.setLayout(new BorderLayout(5, 5));
-    panelSkillLevel.setLayout(new BorderLayout(5, 5));
-    panelPosition.setLayout(new BorderLayout(5, 5));
-    containerButtonGroup1.setLayout(new GridLayout(1, 2, 5, 5));
-    containerButtonGroup2.setLayout(new GridLayout(1, 2, 5, 5));
 
     // Construct left pane.
-    panelFirstName.add(labelFirstName, BorderLayout.WEST);
-    panelFirstName.add(textFieldFirstName, BorderLayout.EAST);
-    panelLastName.add(labelLastName, BorderLayout.WEST);
-    panelLastName.add(textFieldLastName, BorderLayout.EAST);
-    panelBirthDate.add(labelBirthDate, BorderLayout.WEST);
-    panelBirthDate.add(textFieldBirthDate, BorderLayout.EAST);
-    panelSkillLevel.add(labelSkillLevel, BorderLayout.WEST);
-    panelSkillLevel.add(comboBoxSkillLevel, BorderLayout.EAST);
-    panelPosition.add(labelPosition, BorderLayout.WEST);
-    panelPosition.add(comboBoxPosition, BorderLayout.EAST);
+    panelFirstName.setLayout(new GridLayout(1, 2, 5, 5));
+    panelFirstName.add(labelFirstName);
+    panelFirstName.add(textFieldFirstName);
+
+    panelLastName.setLayout(new GridLayout(1, 2, 5, 5));
+    panelLastName.add(labelLastName);
+    panelLastName.add(textFieldLastName);
+
+    panelBirthDate.setLayout(new GridLayout(1, 2, 5, 5));
+    panelBirthDate.add(labelBirthDate);
+    panelBirthDate.add(textFieldBirthDate);
+
+    panelSkillLevel.setLayout(new GridLayout(1, 2, 5, 5));
+    panelSkillLevel.add(labelSkillLevel);
+    panelSkillLevel.add(comboBoxSkillLevel);
+
+    panelPosition.setLayout(new GridLayout(1, 2, 5, 5));
+    panelPosition.add(labelPosition);
+    panelPosition.add(comboBoxPosition);
+
+    containerButtonGroup1.setLayout(new GridLayout(1, 2, 5, 5));
+    containerButtonGroup1.add(buttonUseSample);
+    containerButtonGroup1.add(buttonReset);
+
+    containerButtonGroup2.setLayout(new GridLayout(1, 2, 5, 5));
+    containerButtonGroup2.add(buttonDarkLightMode);
+    containerButtonGroup2.add(buttonExit);
+
+    paneLeftInput.setLayout(new GridLayout(10, 1, 10, 10));
     paneLeftInput.add(panelFirstName);
     paneLeftInput.add(panelLastName);
     paneLeftInput.add(panelBirthDate);
@@ -443,11 +452,7 @@ public class Application extends JFrame implements ApplicationInterface {
     paneLeftInput.add(messageToUser);
     paneLeftInput.add(buttonAddPlayer);
     paneLeftInput.add(buttonCreateTeam);
-    containerButtonGroup1.add(buttonUseSample);
-    containerButtonGroup1.add(buttonReset);
     paneLeftInput.add(containerButtonGroup1);
-    containerButtonGroup2.add(buttonDarkLightMode);
-    containerButtonGroup2.add(buttonExit);
     paneLeftInput.add(containerButtonGroup2);
 
     // Construct right pane.
@@ -469,7 +474,7 @@ public class Application extends JFrame implements ApplicationInterface {
     getContentPane().setBackground(colourBG1);
 
     // Customize Left Pane.
-    paneLeftInput.setPreferredSize(new Dimension(330, 482));
+    paneLeftInput.setPreferredSize(new Dimension(360, 482));
     paneLeftInput.setBackground(colourBG1);
     EmptyBorder emptyBorderPaneLeft = new EmptyBorder(10, 10, 10, 10);
     TitledBorder titledBorderpaneLeft = new TitledBorder("Player Registration");
@@ -501,8 +506,6 @@ public class Application extends JFrame implements ApplicationInterface {
     configureTextField(textFieldBirthDate);
 
     // Customize combo boxes.
-    comboBoxPosition.setPreferredSize(new Dimension(136, comboBoxPosition.getHeight()));
-    comboBoxSkillLevel.setPreferredSize(new Dimension(136, comboBoxSkillLevel.getHeight()));
 
     // Configure message label.
     if (messageToUser.getForeground() != colourFont) {
@@ -588,7 +591,7 @@ public class Application extends JFrame implements ApplicationInterface {
    */
   private void configureTextField(JTextField textField) {
     textField.setColumns(12);
-    textField.setHorizontalAlignment(SwingConstants.RIGHT);
+    textField.setHorizontalAlignment(SwingConstants.LEFT);
   }
 
   /**

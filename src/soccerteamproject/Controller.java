@@ -46,11 +46,8 @@ public class Controller implements ControllerInterface {
     UserInput userInput = view.getUserInput();
 
     // May throw IllegalArgumentException or DuplicatePlayerException.
-    model.registerPlayer(userInput.getFirstName(),
-                         userInput.getLastName(),
-                         userInput.getBirthDate(),
-                         userInput.getPreferredPosition(),
-                         userInput.getSkillLevel());
+    model.registerPlayer(userInput.getFirstName(), userInput.getLastName(),
+        userInput.getBirthDate(), userInput.getPreferredPosition(), userInput.getSkillLevel());
     view.resetAllFields();
   }
 

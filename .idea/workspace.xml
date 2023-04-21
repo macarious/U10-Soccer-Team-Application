@@ -16,9 +16,12 @@
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/soccerteamproject/Application.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/soccerteamproject/Application.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/soccerteamproject/Controller.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/soccerteamproject/Controller.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/soccerteamproject/Player.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/soccerteamproject/Player.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/soccerteamproject/ControllerInterface.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/soccerteamproject/ControllerInterface.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/soccerteamproject/DuplicatePlayerException.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/soccerteamproject/DuplicatePlayerException.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/soccerteamproject/SoccerTeam.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/soccerteamproject/SoccerTeam.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/soccerteamproject/SoccerTeamInterface.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/soccerteamproject/SoccerTeamInterface.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test/soccerteamproject/PlayerIdentifierTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/test/soccerteamproject/PlayerIdentifierTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test/soccerteamproject/PlayerTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/test/soccerteamproject/PlayerTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test/soccerteamproject/SoccerTeamTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/test/soccerteamproject/SoccerTeamTest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -177,7 +180,7 @@
       <workItem from="1682015344605" duration="6983000" />
       <workItem from="1682034551576" duration="18533000" />
       <workItem from="1682058281890" duration="3479000" />
-      <workItem from="1682103639038" duration="4626000" />
+      <workItem from="1682103639038" duration="6562000" />
     </task>
     <task id="LOCAL-00001" summary="Add 4 initial frames to view.">
       <created>1681585226508</created>

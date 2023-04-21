@@ -109,46 +109,45 @@ public class SoccerTeamTest {
     assertEquals(10, soccerTeam.getTeamPlayerList().size());
 
     // Check number of goalies.
-    assertEquals(1, soccerTeam
-        .getTeamPlayerList()
-        .entrySet()
-        .stream()
-        .filter(entry -> entry.getKey().getAssignedPosition() == Position.GOALIE)
-        .count());
+    assertEquals(1, soccerTeam.getTeamPlayerList()
+                              .entrySet()
+                              .stream()
+                              .filter(
+                                  entry -> entry.getKey().getAssignedPosition() == Position.GOALIE)
+                              .count());
 
     // Check number of defenders.
-    assertEquals(2, soccerTeam
-        .getTeamPlayerList()
-        .entrySet()
-        .stream()
-        .filter(entry -> entry.getKey().getAssignedPosition() == Position.DEFENDER)
-        .count());
+    assertEquals(2, soccerTeam.getTeamPlayerList()
+                              .entrySet()
+                              .stream()
+                              .filter(entry -> entry.getKey().getAssignedPosition()
+                                  == Position.DEFENDER)
+                              .count());
 
     // Check number of midfielders.
-    assertEquals(3, soccerTeam
-        .getTeamPlayerList()
-        .entrySet()
-        .stream()
-        .filter(entry -> entry.getKey().getAssignedPosition() == Position.MIDFIELDER)
-        .count());
+    assertEquals(3, soccerTeam.getTeamPlayerList()
+                              .entrySet()
+                              .stream()
+                              .filter(entry -> entry.getKey().getAssignedPosition()
+                                  == Position.MIDFIELDER)
+                              .count());
 
     // Check number of forwards.
-    assertEquals(1, soccerTeam
-        .getTeamPlayerList()
-        .entrySet()
-        .stream()
-        .filter(entry -> entry.getKey().getAssignedPosition() == Position.FORWARD)
-        .count());
+    assertEquals(1, soccerTeam.getTeamPlayerList()
+                              .entrySet()
+                              .stream()
+                              .filter(
+                                  entry -> entry.getKey().getAssignedPosition() == Position.FORWARD)
+                              .count());
 
     // Check unique jersey numbers.
     int playerCount = soccerTeam.getTeamPlayerList().size();
-    int uniqueJerseyCount = soccerTeam
-        .getTeamPlayerList()
-        .keySet()
-        .stream()
-        .map(PlayerIdentifier::getJerseyNumber)
-        .collect(Collectors.toCollection(HashSet::new))
-        .size();
+    int uniqueJerseyCount = soccerTeam.getTeamPlayerList()
+                                      .keySet()
+                                      .stream()
+                                      .map(PlayerIdentifier::getJerseyNumber)
+                                      .collect(Collectors.toCollection(HashSet::new))
+                                      .size();
     assertEquals(playerCount, uniqueJerseyCount);
   }
 
@@ -190,46 +189,45 @@ public class SoccerTeamTest {
     assertEquals(20, soccerTeam.getTeamPlayerList().size());
 
     // Check number of goalies.
-    assertEquals(1, soccerTeam
-        .getTeamPlayerList()
-        .entrySet()
-        .stream()
-        .filter(entry -> entry.getKey().getAssignedPosition() == Position.GOALIE)
-        .count());
+    assertEquals(1, soccerTeam.getTeamPlayerList()
+                              .entrySet()
+                              .stream()
+                              .filter(
+                                  entry -> entry.getKey().getAssignedPosition() == Position.GOALIE)
+                              .count());
 
     // Check number of defenders.
-    assertEquals(2, soccerTeam
-        .getTeamPlayerList()
-        .entrySet()
-        .stream()
-        .filter(entry -> entry.getKey().getAssignedPosition() == Position.DEFENDER)
-        .count());
+    assertEquals(2, soccerTeam.getTeamPlayerList()
+                              .entrySet()
+                              .stream()
+                              .filter(entry -> entry.getKey().getAssignedPosition()
+                                  == Position.DEFENDER)
+                              .count());
 
     // Check number of midfielders.
-    assertEquals(3, soccerTeam
-        .getTeamPlayerList()
-        .entrySet()
-        .stream()
-        .filter(entry -> entry.getKey().getAssignedPosition() == Position.MIDFIELDER)
-        .count());
+    assertEquals(3, soccerTeam.getTeamPlayerList()
+                              .entrySet()
+                              .stream()
+                              .filter(entry -> entry.getKey().getAssignedPosition()
+                                  == Position.MIDFIELDER)
+                              .count());
 
     // Check number of forwards.
-    assertEquals(1, soccerTeam
-        .getTeamPlayerList()
-        .entrySet()
-        .stream()
-        .filter(entry -> entry.getKey().getAssignedPosition() == Position.FORWARD)
-        .count());
+    assertEquals(1, soccerTeam.getTeamPlayerList()
+                              .entrySet()
+                              .stream()
+                              .filter(
+                                  entry -> entry.getKey().getAssignedPosition() == Position.FORWARD)
+                              .count());
 
     // Check unique jersey numbers.
     int playerCount = soccerTeam.getTeamPlayerList().size();
-    int uniqueJerseyCount = soccerTeam
-        .getTeamPlayerList()
-        .keySet()
-        .stream()
-        .map(PlayerIdentifier::getJerseyNumber)
-        .collect(Collectors.toCollection(HashSet::new))
-        .size();
+    int uniqueJerseyCount = soccerTeam.getTeamPlayerList()
+                                      .keySet()
+                                      .stream()
+                                      .map(PlayerIdentifier::getJerseyNumber)
+                                      .collect(Collectors.toCollection(HashSet::new))
+                                      .size();
     assertEquals(playerCount, uniqueJerseyCount);
   }
 
@@ -278,46 +276,45 @@ public class SoccerTeamTest {
     assertEquals(20, soccerTeam.getTeamPlayerList().size());
 
     // Check number of goalies.
-    assertEquals(1, soccerTeam
-        .getTeamPlayerList()
-        .entrySet()
-        .stream()
-        .filter(entry -> entry.getKey().getAssignedPosition() == Position.GOALIE)
-        .count());
+    assertEquals(1, soccerTeam.getTeamPlayerList()
+                              .entrySet()
+                              .stream()
+                              .filter(
+                                  entry -> entry.getKey().getAssignedPosition() == Position.GOALIE)
+                              .count());
 
     // Check number of defenders.
-    assertEquals(2, soccerTeam
-        .getTeamPlayerList()
-        .entrySet()
-        .stream()
-        .filter(entry -> entry.getKey().getAssignedPosition() == Position.DEFENDER)
-        .count());
+    assertEquals(2, soccerTeam.getTeamPlayerList()
+                              .entrySet()
+                              .stream()
+                              .filter(entry -> entry.getKey().getAssignedPosition()
+                                  == Position.DEFENDER)
+                              .count());
 
     // Check number of midfielders.
-    assertEquals(3, soccerTeam
-        .getTeamPlayerList()
-        .entrySet()
-        .stream()
-        .filter(entry -> entry.getKey().getAssignedPosition() == Position.MIDFIELDER)
-        .count());
+    assertEquals(3, soccerTeam.getTeamPlayerList()
+                              .entrySet()
+                              .stream()
+                              .filter(entry -> entry.getKey().getAssignedPosition()
+                                  == Position.MIDFIELDER)
+                              .count());
 
     // Check number of forwards.
-    assertEquals(1, soccerTeam
-        .getTeamPlayerList()
-        .entrySet()
-        .stream()
-        .filter(entry -> entry.getKey().getAssignedPosition() == Position.FORWARD)
-        .count());
+    assertEquals(1, soccerTeam.getTeamPlayerList()
+                              .entrySet()
+                              .stream()
+                              .filter(
+                                  entry -> entry.getKey().getAssignedPosition() == Position.FORWARD)
+                              .count());
 
     // Check unique jersey numbers.
     int playerCount = soccerTeam.getTeamPlayerList().size();
-    int uniqueJerseyCount = soccerTeam
-        .getTeamPlayerList()
-        .keySet()
-        .stream()
-        .map(PlayerIdentifier::getJerseyNumber)
-        .collect(Collectors.toCollection(HashSet::new))
-        .size();
+    int uniqueJerseyCount = soccerTeam.getTeamPlayerList()
+                                      .keySet()
+                                      .stream()
+                                      .map(PlayerIdentifier::getJerseyNumber)
+                                      .collect(Collectors.toCollection(HashSet::new))
+                                      .size();
     assertEquals(playerCount, uniqueJerseyCount);
   }
 
@@ -387,8 +384,8 @@ public class SoccerTeamTest {
 
     PlayerIdentifier playerIdentifier = new PlayerIdentifier(16);
     playerIdentifier.setAssignedPosition(Position.GOALIE);
-    Player player = new Player("Raheem", "Sterling", LocalDate.of(2018, 12, 8), Position.FORWARD,
-        5);
+    Player player =
+        new Player("Raheem", "Sterling", LocalDate.of(2018, 12, 8), Position.FORWARD, 5);
     expectedMap.put(playerIdentifier, player);
 
     playerIdentifier = new PlayerIdentifier(2);
@@ -463,8 +460,8 @@ public class SoccerTeamTest {
 
     PlayerIdentifier playerIdentifier = new PlayerIdentifier(16);
     playerIdentifier.setAssignedPosition(Position.GOALIE);
-    Player player = new Player("Raheem", "Sterling", LocalDate.of(2018, 12, 8), Position.FORWARD,
-        5);
+    Player player =
+        new Player("Raheem", "Sterling", LocalDate.of(2018, 12, 8), Position.FORWARD, 5);
     expectedMap.put(playerIdentifier, player);
 
     playerIdentifier = new PlayerIdentifier(2);

@@ -174,8 +174,7 @@ public class SoccerTeam implements SoccerTeamInterface {
    * @return {@link TreeSet}, a set of {@link Player} ordered by last name, then first name.
    */
   private Set<Player> sortSetByPlayer(Set<Player> set) {
-    TreeSet<Player> sortedSet = new TreeSet<>(set);
-    return sortedSet;
+    return new TreeSet<>(set);
   }
 
   /**

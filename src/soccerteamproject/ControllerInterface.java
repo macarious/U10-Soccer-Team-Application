@@ -31,7 +31,7 @@ public interface ControllerInterface {
    */
   void displayAllPlayer()
       throws MissingInfoException, DateTimeParseException, IllegalArgumentException,
-             DuplicatePlayerException;
+      DuplicatePlayerException;
 
   /**
    * Creates a team with the registered players.

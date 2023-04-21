@@ -139,8 +139,8 @@ public class PlayerTest {
    */
   @Test
   public void testHashCodeEqual() {
-    Player playerDuplicate = new Player("Lionel", "Messi", LocalDate.of(2018, 6, 24),
-        Position.FORWARD, 5);
+    Player playerDuplicate =
+        new Player("Lionel", "Messi", LocalDate.of(2018, 6, 24), Position.FORWARD, 5);
     assertEquals(player1.hashCode(), player1.hashCode());
     assertEquals(player1.hashCode(), playerDuplicate.hashCode());
     assertEquals(playerDuplicate.hashCode(), player1.hashCode());
@@ -161,8 +161,8 @@ public class PlayerTest {
    */
   @Test
   public void testEqualsTrue() {
-    Player playerDuplicate = new Player("Lionel", "Messi", LocalDate.of(2018, 6, 24),
-        Position.FORWARD, 5);
+    Player playerDuplicate =
+        new Player("Lionel", "Messi", LocalDate.of(2018, 6, 24), Position.FORWARD, 5);
     assertEquals(player1, player1);
     assertEquals(player1, playerDuplicate);
     assertEquals(playerDuplicate, player1);
@@ -195,11 +195,13 @@ public class PlayerTest {
     assertTrue(player1.compareTo(player2) > 0);
 
     // Same first name, different last names.
-    Player playerSameLastName = new Player("Lionel", "Nessi", LocalDate.of(2018, 6, 24), Position.FORWARD, 5);
+    Player playerSameLastName =
+        new Player("Lionel", "Nessi", LocalDate.of(2018, 6, 24), Position.FORWARD, 5);
     assertTrue(player1.compareTo(playerSameLastName) < 0);
 
     // Same first names and last names, different age.
-    Player playerSameNames = new Player("Lionel", "Messi", LocalDate.of(2018, 6, 22), Position.FORWARD, 5);
+    Player playerSameNames =
+        new Player("Lionel", "Messi", LocalDate.of(2018, 6, 22), Position.FORWARD, 5);
     assertTrue(player1.compareTo(playerSameNames) > 0);
   }
 }
