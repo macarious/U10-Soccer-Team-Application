@@ -14,7 +14,7 @@
   <component name="ChangeListManager">
     <list default="true" id="5e511721-0ddc-4f47-9002-d327da4f8754" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/soccerteamproject/Application.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/soccerteamproject/Application.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/submission.zip" beforeDir="false" afterPath="$PROJECT_DIR$/submission.zip" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -194,7 +194,7 @@
       <workItem from="1682126194531" duration="902000" />
       <workItem from="1682131992991" duration="1267000" />
       <workItem from="1682133306405" duration="199000" />
-      <workItem from="1682133809383" duration="334000" />
+      <workItem from="1682133809383" duration="3073000" />
     </task>
     <task id="LOCAL-00001" summary="Add 4 initial frames to view.">
       <created>1681585226508</created>
