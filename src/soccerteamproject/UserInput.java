@@ -22,7 +22,7 @@ public class UserInput {
   /**
    * This method sets the firstName field.
    *
-   * @param firstName, String, first name of player.
+   * @param firstName String, first name of player.
    */
   public void setFirstName(String firstName) {
     this.firstName = firstName;
@@ -40,7 +40,7 @@ public class UserInput {
   /**
    * This method sets the birthDate field.
    *
-   * @param birthDate, {@link LocalDate}, birthdate of player.
+   * @param birthDate {@link LocalDate}, birthdate of player.
    */
   public void setBirthDate(LocalDate birthDate) {
     this.birthDate = birthDate;
@@ -49,7 +49,7 @@ public class UserInput {
   /**
    * This method sets the preferredPosition field.
    *
-   * @param preferredPosition, {@link Position}, preferred position of player.
+   * @param preferredPosition {@link Position}, preferred position of player.
    */
   public void setPreferredPosition(Position preferredPosition) {
     this.preferredPosition = preferredPosition;
@@ -58,7 +58,7 @@ public class UserInput {
   /**
    * This method sets the skillLevel field.
    *
-   * @param skillLevel, int, skill level of player (1 to 5 inclusive).
+   * @param skillLevel int, skill level of player (1 to 5 inclusive).
    */
   public void setSkillLevel(int skillLevel) {
     this.skillLevel = skillLevel;

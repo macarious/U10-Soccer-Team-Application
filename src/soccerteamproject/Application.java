@@ -42,10 +42,18 @@ import javax.swing.table.DefaultTableModel;
 public class Application extends JFrame implements ApplicationInterface {
 
   private static final Integer[] SKILL_LEVELS = { 1, 2, 3, 4, 5 };
-  private static final String[] TABLE_HEADINGS_ALL =
-      { "#", "Last Name", "First Name", "Preferred Position", "Age", "Skill" };
-  private static final String[] TABLE_HEADINGS_TEAM =
-      { "Jersey", "Last Name", "First Name", "Assigned Position", "Age", "Skill", };
+  private static final String[] TABLE_HEADINGS_ALL = { "#",
+                                                       "Last Name",
+                                                       "First Name",
+                                                       "Preferred Position",
+                                                       "Age",
+                                                       "Skill" };
+  private static final String[] TABLE_HEADINGS_TEAM = { "Jersey",
+                                                        "Last Name",
+                                                        "First Name",
+                                                        "Assigned Position",
+                                                        "Age",
+                                                        "Skill", };
 
   // Components in the application.
   private JPanel paneLeftInput;
@@ -90,16 +98,16 @@ public class Application extends JFrame implements ApplicationInterface {
 
   // Colours used in application.
   private boolean isDarkMode;
-  private Color colourBG1;
-  private Color colourBG2;
+  private Color colourBackground1;
+  private Color colourBackground2;
   private Color colourBorder;
   private Color colourFont;
-  private Color colourButtonBG1;
+  private Color colourButtonBackground1;
   private Color colourButtonFont1;
-  private Color colourButtonBG2;
+  private Color colourButtonBackground2;
   private Color colourButtonFont2;
-  private Color colourTabBG;
-  private Color colourTabBGSelected;
+  private Color colourTabBackground;
+  private Color colourTabBackgroundSelected;
   private Color colourTabFont;
   private Color colourError;
   private Font titleFont;
@@ -249,8 +257,8 @@ public class Application extends JFrame implements ApplicationInterface {
   /**
    * This method displays a message in the message box given a message and a colour.
    *
-   * @param message,    String, message to display.
-   * @param fontColour, {@link Color}, colour of the font.
+   * @param message    String, message to display.
+   * @param fontColour {@link Color}, colour of the font.
    */
   private void displayMessage(String message, Color fontColour) {
     EmptyBorder emptyBorder = new EmptyBorder(5, 5, 5, 5);
@@ -290,20 +298,20 @@ public class Application extends JFrame implements ApplicationInterface {
    * This method sets the default colours and font. The default colour mode is Dark Mode.
    */
   private void setDarkMode() {
-    colourBG1 = Color.DARK_GRAY;
-    colourBG2 = Color.DARK_GRAY;
+    colourBackground1 = Color.DARK_GRAY;
+    colourBackground2 = Color.DARK_GRAY;
     colourBorder = Color.ORANGE;
     colourFont = Color.WHITE;
-    colourTabBGSelected = Color.DARK_GRAY;
-    colourButtonBG2 = Color.LIGHT_GRAY;
+    colourTabBackgroundSelected = Color.DARK_GRAY;
+    colourButtonBackground2 = Color.LIGHT_GRAY;
     colourButtonFont2 = Color.BLACK;
     colourError = Color.PINK;
     isDarkMode = true;
 
     // Does not change between dark and light mode.
-    colourButtonBG1 = Color.ORANGE;
+    colourButtonBackground1 = Color.ORANGE;
     colourButtonFont1 = Color.BLACK;
-    colourTabBG = Color.ORANGE;
+    colourTabBackground = Color.ORANGE;
     colourTabFont = Color.DARK_GRAY;
     titleFont = new Font(Font.SANS_SERIF, Font.BOLD, 24);
     buttonFont1 = new Font(Font.SANS_SERIF, Font.BOLD, 16);
@@ -316,12 +324,12 @@ public class Application extends JFrame implements ApplicationInterface {
   private void toggleDarkLightMode() {
     if (isDarkMode) {
       // Convert to Light Mode.
-      colourBG1 = Color.LIGHT_GRAY;
-      colourBG2 = Color.LIGHT_GRAY;
+      colourBackground1 = Color.LIGHT_GRAY;
+      colourBackground2 = Color.LIGHT_GRAY;
       colourBorder = Color.BLACK;
       colourFont = Color.BLACK;
-      colourTabBGSelected = Color.LIGHT_GRAY;
-      colourButtonBG2 = Color.GRAY;
+      colourTabBackgroundSelected = Color.LIGHT_GRAY;
+      colourButtonBackground2 = Color.GRAY;
       colourButtonFont2 = Color.WHITE;
       colourError = Color.RED;
       isDarkMode = false;
@@ -471,16 +479,16 @@ public class Application extends JFrame implements ApplicationInterface {
   private void configureApplication() {
     setTitle("Soccer Team Application");
     setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-    getContentPane().setBackground(colourBG1);
+    getContentPane().setBackground(colourBackground1);
 
     // Customize Left Pane.
     paneLeftInput.setPreferredSize(new Dimension(360, 482));
-    paneLeftInput.setBackground(colourBG1);
-    EmptyBorder emptyBorderPaneLeft = new EmptyBorder(10, 10, 10, 10);
+    paneLeftInput.setBackground(colourBackground1);
     TitledBorder titledBorderpaneLeft = new TitledBorder("Player Registration");
     titledBorderpaneLeft.setTitleFont(titleFont);
     titledBorderpaneLeft.setTitleColor(colourFont);
     titledBorderpaneLeft.setBorder(new LineBorder(colourFont, 2));
+    EmptyBorder emptyBorderPaneLeft = new EmptyBorder(10, 10, 10, 10);
     paneLeftInput.setBorder(BorderFactory.createCompoundBorder(titledBorderpaneLeft,
                                                                emptyBorderPaneLeft));
 
@@ -521,8 +529,8 @@ public class Application extends JFrame implements ApplicationInterface {
     configureButton2(buttonExit);
 
     // Customize sub-panes for lesser buttons.
-    containerButtonGroup1.setBackground(colourBG1);
-    containerButtonGroup2.setBackground(colourBG1);
+    containerButtonGroup1.setBackground(colourBackground1);
+    containerButtonGroup2.setBackground(colourBackground1);
 
     // Customize Right Panel (Tab #1, 2, 3).
     paneRightOutput.setPreferredSize(new Dimension(600, 480));
@@ -556,18 +564,18 @@ public class Application extends JFrame implements ApplicationInterface {
 
     // Set the background color of the JViewport that contains the JTable
     JViewport viewport1 = (JViewport) tableAllPlayers.getParent();
-    viewport1.setBackground(colourTabBGSelected);
+    viewport1.setBackground(colourTabBackgroundSelected);
     JViewport viewport2 = (JViewport) tableTeamPlayers.getParent();
-    viewport2.setBackground(colourTabBGSelected);
+    viewport2.setBackground(colourTabBackgroundSelected);
     JViewport viewport3 = (JViewport) tableStartingLineUp.getParent();
-    viewport3.setBackground(colourTabBGSelected);
+    viewport3.setBackground(colourTabBackgroundSelected);
 
     // Set tab colours.
-    paneRightOutput.setBackgroundAt(0, colourTabBG);
+    paneRightOutput.setBackgroundAt(0, colourTabBackground);
     paneRightOutput.setForegroundAt(0, colourTabFont);
-    paneRightOutput.setBackgroundAt(1, colourTabBG);
+    paneRightOutput.setBackgroundAt(1, colourTabBackground);
     paneRightOutput.setForegroundAt(1, colourTabFont);
-    paneRightOutput.setBackgroundAt(2, colourTabBG);
+    paneRightOutput.setBackgroundAt(2, colourTabBackground);
     paneRightOutput.setForegroundAt(2, colourTabFont);
   }
 
@@ -581,7 +589,7 @@ public class Application extends JFrame implements ApplicationInterface {
     LineBorder lineBorderSubPanel = new LineBorder(colourBorder, 1);
     fieldPanel.setBorder(BorderFactory.createCompoundBorder(lineBorderSubPanel,
                                                             emptyBorderSubPanel));
-    fieldPanel.setBackground(colourBG2);
+    fieldPanel.setBackground(colourBackground2);
   }
 
   /**
@@ -601,7 +609,7 @@ public class Application extends JFrame implements ApplicationInterface {
    */
   private void configureButton1(JButton button) {
     button.setActionCommand(button.getText());
-    button.setBackground(colourButtonBG1);
+    button.setBackground(colourButtonBackground1);
     button.setForeground(colourButtonFont1);
     button.setBorder(BorderFactory.createRaisedBevelBorder());
     button.setFont(buttonFont1);
@@ -614,7 +622,7 @@ public class Application extends JFrame implements ApplicationInterface {
    */
   private void configureButton2(JButton button) {
     button.setActionCommand(button.getText());
-    button.setBackground(colourButtonBG2);
+    button.setBackground(colourButtonBackground2);
     button.setForeground(colourButtonFont2);
     button.setBorder(BorderFactory.createRaisedBevelBorder());
     button.setFont(buttonFont2);
@@ -635,9 +643,9 @@ public class Application extends JFrame implements ApplicationInterface {
     table.setBorder(new LineBorder(colourBorder, 0));
     table.setGridColor(colourButtonFont1);
     table.setSelectionForeground(colourButtonFont1);
-    table.setSelectionBackground(colourButtonBG1);
+    table.setSelectionBackground(colourButtonBackground1);
     table.setForeground(colourFont);
-    table.setBackground(colourTabBGSelected);
+    table.setBackground(colourTabBackgroundSelected);
     table.setFont(buttonFont2);
     table.setShowVerticalLines(false);
     table.setAutoCreateRowSorter(true);
@@ -650,7 +658,7 @@ public class Application extends JFrame implements ApplicationInterface {
    */
   private void configureScrollPane(JScrollPane scrollPane) {
     scrollPane.setPreferredSize(new Dimension(550, 425));
-    scrollPane.setBackground(colourBG1);
+    scrollPane.setBackground(colourBackground1);
     scrollPane.setBorder(BorderFactory.createEmptyBorder());
   }
 
@@ -660,7 +668,7 @@ public class Application extends JFrame implements ApplicationInterface {
    * @param tabPanel {@link JPanel}, scroll pane to configure.
    */
   private void configureTabPanel(JPanel tabPanel) {
-    tabPanel.setBackground(colourTabBGSelected);
+    tabPanel.setBackground(colourTabBackgroundSelected);
     EmptyBorder emptyBorderPane1 = new EmptyBorder(5, 10, 10, 10);
     LineBorder lineBorderPane1 = new LineBorder(colourBorder, 0);
     tabPanel.setBorder(BorderFactory.createCompoundBorder(lineBorderPane1, emptyBorderPane1));
