@@ -13,15 +13,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="5e511721-0ddc-4f47-9002-d327da4f8754" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/res/.idea/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/artifacts/CS_5004_Soccer_Team_Application_jar.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/artifacts/CS_5004_Soccer_Team_Application_jar.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/soccerteamproject/Application.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/soccerteamproject/Application.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/soccerteamproject/Controller.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/soccerteamproject/Controller.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/soccerteamproject/ControllerInterface.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/soccerteamproject/ControllerInterface.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/soccerteamproject/DuplicatePlayerException.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/soccerteamproject/DuplicatePlayerException.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/soccerteamproject/SoccerTeam.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/soccerteamproject/SoccerTeam.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/test/soccerteamproject/PlayerIdentifierTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/test/soccerteamproject/PlayerIdentifierTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/test/soccerteamproject/PlayerTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/test/soccerteamproject/PlayerTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/test/soccerteamproject/SoccerTeamTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/test/soccerteamproject/SoccerTeamTest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -65,11 +59,12 @@
     "WebServerToolWindowFactoryState": "false",
     "com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrary": "JUnit4",
     "com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrarySuperClass.JUnit4": "",
-    "last_opened_file_path": "G:/My Drive/School/2023 - Spring/CS5004/CS-5004-Soccer-Team-Application",
+    "last_opened_file_path": "G:/My Drive/School/2023 - Spring/CS5004/CS-5004-Soccer-Team-Application/out/artifacts/CS_5004_Soccer_Team_Application_jar/CS-5004-Soccer-Team-Application_jar.jar",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
     "project.structure.last.edited": "Artifacts",
     "project.structure.proportion": "0.15",
     "project.structure.side.proportion": "0.2",
@@ -89,7 +84,7 @@
       <recent name="SoccerTeamProject" />
     </key>
   </component>
-  <component name="RunManager" selected="Application.Driver">
+  <component name="RunManager" selected="JAR Application.Soccer Team Application">
     <configuration name="Driver" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="soccerteamproject.Driver" />
       <module name="CS-5004-Soccer-Team-Application" />
@@ -133,6 +128,20 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="Soccer Team Application" type="JarApplication">
+      <option name="JAR_PATH" value="$PROJECT_DIR$/out/artifacts/CS_5004_Soccer_Team_Application_jar/CS-5004-Soccer-Team-Application_jar.jar" />
+      <option name="WORKING_DIRECTORY" value="G:\My Drive\School\2023 - Spring\CS5004\CS-5004-Soccer-Team-Application" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <method v="2">
+        <option name="BuildArtifacts" enabled="true" />
+      </method>
+    </configuration>
+    <list>
+      <item itemvalue="Application.Driver" />
+      <item itemvalue="JAR Application.Soccer Team Application" />
+      <item itemvalue="JUnit.soccerteamproject in CS-5004-Soccer-Team-Application" />
+      <item itemvalue="JUnit.SoccerTeamTest.getStartingLineUp" />
+    </list>
     <recent_temporary>
       <list>
         <item itemvalue="Application.Driver" />
@@ -180,7 +189,7 @@
       <workItem from="1682015344605" duration="6983000" />
       <workItem from="1682034551576" duration="18533000" />
       <workItem from="1682058281890" duration="3479000" />
-      <workItem from="1682103639038" duration="6562000" />
+      <workItem from="1682103639038" duration="14224000" />
     </task>
     <task id="LOCAL-00001" summary="Add 4 initial frames to view.">
       <created>1681585226508</created>
