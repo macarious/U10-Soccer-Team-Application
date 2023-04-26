@@ -11,7 +11,9 @@ Jersey numbers and positions are assigned to the players with the highest skill 
 
 1. __Register Player__:
    Registers a new player to be a candidate for team creation.
-   A list of registered players are available for view.<br><br>
+   A list of registered players are available for view.
+   ![Registered Players Display](https://github.com/macarious/U10-Soccer-Team-Application/blob/master/res/01-register-player.png "List of Registered Players")
+   <br>
 2. __Create Team__:
    Creates a soccer team when at least 10 registered players.
    Team creation automatically assigns random jersey number to the top 20 players with the highest
@@ -19,10 +21,14 @@ Jersey numbers and positions are assigned to the players with the highest skill 
    Assignment of positions prioritizes players with the highest skill levels, then preferred
    positions.
    A list of all team players and a list of all players on the starting line up are available for
-   view.<br><br>
+   view.
+   ![Team Players Display](https://github.com/macarious/U10-Soccer-Team-Application/blob/master/res/02-team-display.png "List of Players on the Team")
+   <br>
 3. __Use Sample Players__:
    Registers a preset list of 25 players. Players that are already registered will be removed.
-   This does not automatically creates a team.<br><br>
+   This does not automatically creates a team.
+   ![Starting Line Up Display](https://github.com/macarious/U10-Soccer-Team-Application/blob/master/res/03-starting-line-up.png "List of Players on Starting Line Up")
+   <br>
 4. __Reset All__:
    Clear all registered players and team information.<br><br>
 5. __Toggle Dark/Light Mode__:
