@@ -38,9 +38,9 @@ Jersey numbers and positions are assigned to the players with the highest skill 
 
 ## 3. How to Run
 
-To run `CS-5004-Soccer-Team-Application_jar.jar` in the terminal, use the command from the
+To run `U10-Soccer-Team-Application.jar` in the terminal, use the command from the
 directory:
-> java -jar ./CS-5004-Soccer-Team-Application_jar.jar
+> java -jar ./U10-Soccer-Team-Application.jar
 
 For more information,
 see [Oracle Java Documentation](https://docs.oracle.com/javase/tutorial/deployment/jar/run.html).
